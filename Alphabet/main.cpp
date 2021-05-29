@@ -10,11 +10,6 @@
 const int SCREEN_WIDTH = 1366;
 const int SCREEN_HEIGHT = 768;
 
-const std::string KEYBOARD_PATH = "res/kb.png";
-const std::string KEYDOWN_PATH = "res/keydown.png";
-
-const int KEYDOWN_DIM = 104;
-
 //Starts up SDL and creates window
 bool init();
 
@@ -88,7 +83,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Load keyboard texture
-	kb->gKeyboardTexture = loadTexture(KEYBOARD_PATH);
+	kb->gKeyboardTexture = loadTexture(kb->KEYBOARD_PATH);
 	if (kb->gKeyboardTexture == NULL)
 	{
 		printf("Failed to load keyboard image!\n");
@@ -96,7 +91,7 @@ bool loadMedia()
 	}
 
 	//Load keyDown texture
-	kb->gKeyDownTexture = loadTexture(KEYDOWN_PATH);
+	kb->gKeyDownTexture = loadTexture(kb->KEYDOWN_PATH);
 	if (kb->gKeyDownTexture == NULL)
 	{
 		printf("Failed to load keydown image!\n");
@@ -170,7 +165,7 @@ int main(int argc, char* args[])
 			SDL_Event e;
 
 			bool keyIsDown = false;
-			SDL_Rect* keyDownPos = new SDL_Rect{0, 0, KEYDOWN_DIM, KEYDOWN_DIM};
+			SDL_Rect* keyDownPos = new SDL_Rect{0, 0, kb->KEYDOWN_DIM, kb->KEYDOWN_DIM};
 
 			//While application is running
 			while (!quit)

@@ -1,9 +1,14 @@
 #pragma once
 #include <SDL.h>
 #include <utility>
+#include <string>
 
 struct Keyboard
 {
+	const std::string KEYBOARD_PATH = "res/kb.png";
+	const std::string KEYDOWN_PATH = "res/keydown.png";
+	const int KEYDOWN_DIM = 104;
+
 	SDL_Texture* gKeyboardTexture = NULL;
 	SDL_Texture* gKeyDownTexture = NULL;
 	enum key_names {
