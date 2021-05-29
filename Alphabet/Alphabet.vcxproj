@@ -23,9 +23,11 @@
     <Image Include="res\keydown.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="keyboard.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

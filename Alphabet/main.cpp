@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <utility>
+#include <keyboard.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -32,20 +33,7 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-//Keyboard texture
-SDL_Texture* gKeyboardTexture = NULL;
-
-//Keydown texture
-SDL_Texture* gKeyDownTexture = NULL;
-
-enum key_names {
-	q, w, e, r, t, y, u, i, o, p, leftBracket, rightBracket, 
-	a, s, d, f, g, h, j, k, l, semicolon, quote,
-	z, x, c, v, b, n, m, comma, period, slash,
-	spacebar, numberOfKeys
-};
-
-std::pair<int, int> key_positions[numberOfKeys];
+Keyboard* kb = new Keyboard();
 
 bool init()
 {
@@ -89,6 +77,7 @@ bool init()
 			}
 		}
 	}
+	kb->initKeyboard();
 
 	return success;
 }
@@ -99,16 +88,16 @@ bool loadMedia()
 	bool success = true;
 
 	//Load keyboard texture
-	gKeyboardTexture = loadTexture(KEYBOARD_PATH);
-	if (gKeyboardTexture == NULL)
+	kb->gKeyboardTexture = loadTexture(KEYBOARD_PATH);
+	if (kb->gKeyboardTexture == NULL)
 	{
 		printf("Failed to load keyboard image!\n");
 		success = false;
 	}
 
 	//Load keyDown texture
-	gKeyDownTexture = loadTexture(KEYDOWN_PATH);
-	if (gKeyDownTexture == NULL)
+	kb->gKeyDownTexture = loadTexture(KEYDOWN_PATH);
+	if (kb->gKeyDownTexture == NULL)
 	{
 		printf("Failed to load keydown image!\n");
 		success = false;
@@ -119,13 +108,7 @@ bool loadMedia()
 
 void close()
 {
-	//Free loaded keyboard image
-	SDL_DestroyTexture(gKeyboardTexture);
-	gKeyboardTexture = NULL;
-
-	//Free loaded keydown image
-	SDL_DestroyTexture(gKeyDownTexture);
-	gKeyDownTexture = NULL;
+	kb->destroy();
 
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);
@@ -134,7 +117,6 @@ void close()
 	gRenderer = NULL;
 
 	//Quit SDL subsystems
-	IMG_Quit();
 	SDL_Quit();
 }
 
@@ -167,15 +149,6 @@ SDL_Texture* loadTexture(std::string path)
 
 int main(int argc, char* args[])
 {
-
-	for (int i = 0; i < 12; ++i)
-		key_positions[i] = std::make_pair(9 + 113 * i, 270);
-	for (int i = 12; i < 23; ++i) 
-		key_positions[i] = std::make_pair(37 + 113 * (i - 12), 383);
-	for (int i = 23; i < 33; ++i)
-		key_positions[i] = std::make_pair(95 + 113 * (i - 23), 496);
-	key_positions[33] = std::make_pair(265, 609);
-
 	//Start up SDL and create window
 	if (!init())
 	{
@@ -213,150 +186,10 @@ int main(int argc, char* args[])
 					{
 						quit = true;
 					}
-					else if (e.type == SDL_KEYDOWN)
+					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
 					{
-						switch (e.key.keysym.sym)
-						{
-							//is there a better way to do this lol
-							case SDLK_q:
-								keyDownPos->x = key_positions[key_names::q].first;
-								keyDownPos->y = key_positions[key_names::q].second;
-								break;
-							case SDLK_w:
-								keyDownPos->x = key_positions[key_names::w].first;
-								keyDownPos->y = key_positions[key_names::w].second;
-								break;
-							case SDLK_e:
-								keyDownPos->x = key_positions[key_names::e].first;
-								keyDownPos->y = key_positions[key_names::e].second;
-								break;
-							case SDLK_r:
-								keyDownPos->x = key_positions[key_names::r].first;
-								keyDownPos->y = key_positions[key_names::r].second;
-								break;
-							case SDLK_t:
-								keyDownPos->x = key_positions[key_names::t].first;
-								keyDownPos->y = key_positions[key_names::t].second;
-								break;
-							case SDLK_y:
-								keyDownPos->x = key_positions[key_names::y].first;
-								keyDownPos->y = key_positions[key_names::y].second;
-								break;
-							case SDLK_u:
-								keyDownPos->x = key_positions[key_names::u].first;
-								keyDownPos->y = key_positions[key_names::u].second;
-								break;
-							case SDLK_i:
-								keyDownPos->x = key_positions[key_names::i].first;
-								keyDownPos->y = key_positions[key_names::i].second;
-								break;
-							case SDLK_o:
-								keyDownPos->x = key_positions[key_names::o].first;
-								keyDownPos->y = key_positions[key_names::o].second;
-								break;
-							case SDLK_p:
-								keyDownPos->x = key_positions[key_names::p].first;
-								keyDownPos->y = key_positions[key_names::p].second;
-								break;
-							case SDLK_LEFTBRACKET:
-								keyDownPos->x = key_positions[key_names::leftBracket].first;
-								keyDownPos->y = key_positions[key_names::leftBracket].second;
-								break;
-							case SDLK_RIGHTBRACKET:
-								keyDownPos->x = key_positions[key_names::rightBracket].first;
-								keyDownPos->y = key_positions[key_names::rightBracket].second;
-								break;
-							case SDLK_a:
-								keyDownPos->x = key_positions[key_names::a].first;
-								keyDownPos->y = key_positions[key_names::a].second;
-								break;
-							case SDLK_s:
-								keyDownPos->x = key_positions[key_names::s].first;
-								keyDownPos->y = key_positions[key_names::s].second;
-								break;
-							case SDLK_d:
-								keyDownPos->x = key_positions[key_names::d].first;
-								keyDownPos->y = key_positions[key_names::d].second;
-								break;
-							case SDLK_f:
-								keyDownPos->x = key_positions[key_names::f].first;
-								keyDownPos->y = key_positions[key_names::f].second;
-								break;
-							case SDLK_g:
-								keyDownPos->x = key_positions[key_names::g].first;
-								keyDownPos->y = key_positions[key_names::g].second;
-								break;
-							case SDLK_h:
-								keyDownPos->x = key_positions[key_names::h].first;
-								keyDownPos->y = key_positions[key_names::h].second;
-								break;
-							case SDLK_j:
-								keyDownPos->x = key_positions[key_names::j].first;
-								keyDownPos->y = key_positions[key_names::j].second;
-								break;
-							case SDLK_k:
-								keyDownPos->x = key_positions[key_names::k].first;
-								keyDownPos->y = key_positions[key_names::k].second;
-								break;
-							case SDLK_l:
-								keyDownPos->x = key_positions[key_names::l].first;
-								keyDownPos->y = key_positions[key_names::l].second;
-								break;
-							case SDLK_SEMICOLON:
-								keyDownPos->x = key_positions[key_names::semicolon].first;
-								keyDownPos->y = key_positions[key_names::semicolon].second;
-								break;
-							case SDLK_QUOTE:
-								keyDownPos->x = key_positions[key_names::quote].first;
-								keyDownPos->y = key_positions[key_names::quote].second;
-								break;
-							case SDLK_z:
-								keyDownPos->x = key_positions[key_names::z].first;
-								keyDownPos->y = key_positions[key_names::z].second;
-								break;
-							case SDLK_x:
-								keyDownPos->x = key_positions[key_names::x].first;
-								keyDownPos->y = key_positions[key_names::x].second;
-								break;
-							case SDLK_c:
-								keyDownPos->x = key_positions[key_names::c].first;
-								keyDownPos->y = key_positions[key_names::c].second;
-								break;
-							case SDLK_v:
-								keyDownPos->x = key_positions[key_names::v].first;
-								keyDownPos->y = key_positions[key_names::v].second;
-								break;
-							case SDLK_b:
-								keyDownPos->x = key_positions[key_names::b].first;
-								keyDownPos->y = key_positions[key_names::b].second;
-								break;
-							case SDLK_n:
-								keyDownPos->x = key_positions[key_names::n].first;
-								keyDownPos->y = key_positions[key_names::n].second;
-								break;
-							case SDLK_m:
-								keyDownPos->x = key_positions[key_names::m].first;
-								keyDownPos->y = key_positions[key_names::m].second;
-								break;
-							case SDLK_COMMA:
-								keyDownPos->x = key_positions[key_names::comma].first;
-								keyDownPos->y = key_positions[key_names::comma].second;
-								break;
-							case SDLK_PERIOD:
-								keyDownPos->x = key_positions[key_names::period].first;
-								keyDownPos->y = key_positions[key_names::period].second;
-								break;
-							case SDLK_SLASH:
-								keyDownPos->x = key_positions[key_names::slash].first;
-								keyDownPos->y = key_positions[key_names::slash].second;
-								break;
-							case SDLK_SPACE:
-								keyDownPos->x = key_positions[key_names::spacebar].first;
-								keyDownPos->y = key_positions[key_names::spacebar].second;
-								break;
-						}
-
-						SDL_RenderCopy(gRenderer, gKeyDownTexture, NULL, keyDownPos);
+						kb->setKeyDownPos(keyDownPos, e);
+						SDL_RenderCopy(gRenderer, kb->gKeyDownTexture, NULL, keyDownPos);
 						keyIsDown = true;
 					}
 					else if (e.type == SDL_KEYUP)
@@ -366,11 +199,11 @@ int main(int argc, char* args[])
 				}
 
 				if (keyIsDown) {
-					SDL_RenderCopy(gRenderer, gKeyDownTexture, NULL, keyDownPos);
+					SDL_RenderCopy(gRenderer, kb->gKeyDownTexture, NULL, keyDownPos);
 				}
 
 				//Render keyboard texture to screen
-				SDL_RenderCopy(gRenderer, gKeyboardTexture, NULL, NULL);
+				SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);
