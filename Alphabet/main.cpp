@@ -24,7 +24,7 @@ void close();
 SDL_Window* gWindow = NULL;
 
 //The window renderer
-static SDL_Renderer* gRenderer = NULL; //it's not good to make static but im not sure how to do otherwise..
+SDL_Renderer* gRenderer = NULL;
 
 Keyboard* kb = new Keyboard();
 
