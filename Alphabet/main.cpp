@@ -140,10 +140,10 @@ int main(int argc, char* args[])
 					{
 						quit = true;
 					}
+					// when pressed down
 					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym) && !keyIsDown)
 					{
 						kb->keyDown(keyDownPos, e);
-						SDL_RenderCopy(gRenderer, kb->gKeyDownTexture, NULL, keyDownPos);
 						keyIsDown = true;
 					}
 					else if (e.type == SDL_KEYUP)
@@ -152,6 +152,7 @@ int main(int argc, char* args[])
 					}
 				}
 
+				// when held down
 				if (keyIsDown) {
 					SDL_RenderCopy(gRenderer, kb->gKeyDownTexture, NULL, keyDownPos);
 				}
