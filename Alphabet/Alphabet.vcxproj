@@ -19,10 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\kb.png" />
-    <Image Include="res\keydown.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -34,6 +30,13 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Alphabet.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\sprites\kb.png" />
+    <Image Include="res\sprites\keydown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\sounds\press.wav" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

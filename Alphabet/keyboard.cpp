@@ -50,7 +50,7 @@ bool Keyboard::loadKeyboard(SDL_Renderer* renderer) {
 	bool success = true;
 
 	//Load keyboard texture
-	gKeyboardTexture = texture::loadTexture(KEYBOARD_PATH, renderer);
+	gKeyboardTexture = Texture::loadTexture(KEYBOARD_PATH, renderer);
 	if (gKeyboardTexture == NULL)
 	{
 		printf("Failed to load keyboard image!\n");
@@ -58,10 +58,18 @@ bool Keyboard::loadKeyboard(SDL_Renderer* renderer) {
 	}
 
 	//Load keyDown texture
-	gKeyDownTexture = texture::loadTexture(KEYDOWN_PATH, renderer);
+	gKeyDownTexture = Texture::loadTexture(KEYDOWN_PATH, renderer);
 	if (gKeyDownTexture == NULL)
 	{
 		printf("Failed to load keydown image!\n");
+		success = false;
+	}
+
+	//Load sound effects
+	onPressSound = Mix_LoadWAV(PRESS_SOUND_PATH);
+	if (onPressSound == NULL)
+	{
+		printf("Failed to load press sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		success = false;
 	}
 
@@ -76,7 +84,8 @@ bool Keyboard::isValidKey(int sym) {
 	return false;
 }
 
-void Keyboard::setKeyDownPos(SDL_Rect* keyDownPos, SDL_Event e) {
+void Keyboard::keyDown(SDL_Rect* keyDownPos, SDL_Event e) {
+	// set keyDownPos
 	switch (e.key.keysym.sym)
 	{
 	case SDLK_q:
@@ -216,6 +225,8 @@ void Keyboard::setKeyDownPos(SDL_Rect* keyDownPos, SDL_Event e) {
 		keyDownPos->y = key_positions[key_names::spacebar].second;
 		break;
 	}
+	//play press sound
+	Mix_PlayChannel(-1, onPressSound, 0);
 }
 
 void Keyboard::destroy() {
@@ -226,4 +237,7 @@ void Keyboard::destroy() {
 	//Free loaded keydown image
 	SDL_DestroyTexture(gKeyDownTexture);
 	gKeyDownTexture = NULL;
+
+	Mix_FreeChunk(onPressSound);
+	onPressSound = NULL;
 }

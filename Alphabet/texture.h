@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
-struct texture
+struct Texture
 {
 	static SDL_Texture* loadTexture(std::string path, SDL_Renderer* renderer)
 	{

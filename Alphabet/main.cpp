@@ -140,9 +140,9 @@ int main(int argc, char* args[])
 					{
 						quit = true;
 					}
-					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
+					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym) && !keyIsDown)
 					{
-						kb->setKeyDownPos(keyDownPos, e);
+						kb->keyDown(keyDownPos, e);
 						SDL_RenderCopy(gRenderer, kb->gKeyDownTexture, NULL, keyDownPos);
 						keyIsDown = true;
 					}

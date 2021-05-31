@@ -8,8 +8,10 @@
 
 struct Keyboard
 {
-	const std::string KEYBOARD_PATH = "res/kb.png";
-	const std::string KEYDOWN_PATH = "res/keydown.png";
+	const std::string KEYBOARD_PATH = "res/sprites/kb.png";
+	const std::string KEYDOWN_PATH = "res/sprites/keydown.png";
+	const char* PRESS_SOUND_PATH = "res/sounds/press.wav";
+
 	const int KEYDOWN_DIM = 104;
 
 	SDL_Texture* gKeyboardTexture = NULL;
@@ -29,6 +31,6 @@ struct Keyboard
 	void initKeyboard();
 	bool loadKeyboard(SDL_Renderer* renderer);
 	bool isValidKey(int sym);
-	void setKeyDownPos(SDL_Rect* keyDownPos, SDL_Event e);
+	void keyDown(SDL_Rect* keyDownPos, SDL_Event e);
 	void destroy();
 };
