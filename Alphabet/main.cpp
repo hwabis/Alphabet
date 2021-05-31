@@ -1,6 +1,7 @@
 //Using SDL, SDL_image, standard IO, and strings
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include <utility>
@@ -19,14 +20,11 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
-//Loads individual image as texture
-SDL_Texture* loadTexture(std::string path);
-
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
 //The window renderer
-SDL_Renderer* gRenderer = NULL;
+static SDL_Renderer* gRenderer = NULL; //it's not good to make static but im not sure how to do otherwise..
 
 Keyboard* kb = new Keyboard();
 
@@ -69,6 +67,13 @@ bool init()
 			{
 				//Initialize renderer color
 				SDL_SetRenderDrawColor(gRenderer, 0x0, 0x0, 0x0, 0xFF);
+
+				//Initialize SDL_mixer
+				if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+				{
+					printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+					success = false;
+				}
 			}
 		}
 	}
@@ -79,26 +84,7 @@ bool init()
 
 bool loadMedia()
 {
-	//Loading success flag
-	bool success = true;
-
-	//Load keyboard texture
-	kb->gKeyboardTexture = loadTexture(kb->KEYBOARD_PATH);
-	if (kb->gKeyboardTexture == NULL)
-	{
-		printf("Failed to load keyboard image!\n");
-		success = false;
-	}
-
-	//Load keyDown texture
-	kb->gKeyDownTexture = loadTexture(kb->KEYDOWN_PATH);
-	if (kb->gKeyDownTexture == NULL)
-	{
-		printf("Failed to load keydown image!\n");
-		success = false;
-	}
-
-	return success;
+	return kb->loadKeyboard(gRenderer);
 }
 
 void close()
@@ -113,33 +99,6 @@ void close()
 
 	//Quit SDL subsystems
 	SDL_Quit();
-}
-
-SDL_Texture* loadTexture(std::string path)
-{
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	if (loadedSurface == NULL)
-	{
-		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-	}
-	else
-	{
-		//Create texture from surface pixels
-		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
-		if (newTexture == NULL)
-		{
-			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface(loadedSurface);
-	}
-
-	return newTexture;
 }
 
 int main(int argc, char* args[])

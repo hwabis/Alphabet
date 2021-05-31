@@ -6,35 +6,35 @@ void Keyboard::initKeyboard() {
 	validKeys[2] = SDLK_e;
 	validKeys[3] = SDLK_r;
 	validKeys[4] = SDLK_t;
-	validKeys[4] = SDLK_y;
-	validKeys[5] = SDLK_u;
-	validKeys[6] = SDLK_i;
-	validKeys[7] = SDLK_o;
-	validKeys[8] = SDLK_p;
-	validKeys[9] = SDLK_LEFTBRACKET;
-	validKeys[10] = SDLK_RIGHTBRACKET;
-	validKeys[11] = SDLK_a;
-	validKeys[12] = SDLK_s;
-	validKeys[13] = SDLK_d;
-	validKeys[14] = SDLK_f;
-	validKeys[15] = SDLK_g;
-	validKeys[16] = SDLK_h;
-	validKeys[17] = SDLK_j;
-	validKeys[18] = SDLK_k;
-	validKeys[19] = SDLK_l;
-	validKeys[20] = SDLK_SEMICOLON;
-	validKeys[21] = SDLK_QUOTE;
-	validKeys[22] = SDLK_z;
-	validKeys[23] = SDLK_x;
-	validKeys[24] = SDLK_c;
-	validKeys[25] = SDLK_v;
-	validKeys[26] = SDLK_b;
-	validKeys[27] = SDLK_n;
-	validKeys[28] = SDLK_m;
-	validKeys[29] = SDLK_COMMA;
-	validKeys[30] = SDLK_PERIOD;
-	validKeys[31] = SDLK_SLASH;
-	validKeys[32] = SDLK_SPACE;
+	validKeys[5] = SDLK_y;
+	validKeys[6] = SDLK_u;
+	validKeys[7] = SDLK_i;
+	validKeys[8] = SDLK_o;
+	validKeys[9] = SDLK_p;
+	validKeys[10] = SDLK_LEFTBRACKET;
+	validKeys[11] = SDLK_RIGHTBRACKET;
+	validKeys[12] = SDLK_a;
+	validKeys[13] = SDLK_s;
+	validKeys[14] = SDLK_d;
+	validKeys[15] = SDLK_f;
+	validKeys[16] = SDLK_g;
+	validKeys[17] = SDLK_h;
+	validKeys[18] = SDLK_j;
+	validKeys[19] = SDLK_k;
+	validKeys[20] = SDLK_l;
+	validKeys[21] = SDLK_SEMICOLON;
+	validKeys[22] = SDLK_QUOTE;
+	validKeys[23] = SDLK_z;
+	validKeys[24] = SDLK_x;
+	validKeys[25] = SDLK_c;
+	validKeys[26] = SDLK_v;
+	validKeys[27] = SDLK_b;
+	validKeys[28] = SDLK_n;
+	validKeys[29] = SDLK_m;
+	validKeys[30] = SDLK_COMMA;
+	validKeys[31] = SDLK_PERIOD;
+	validKeys[32] = SDLK_SLASH;
+	validKeys[33] = SDLK_SPACE;
 
 	for (int i = 0; i < 12; ++i)
 		Keyboard::key_positions[i] = std::make_pair(9 + 113 * i, 270);
@@ -43,6 +43,29 @@ void Keyboard::initKeyboard() {
 	for (int i = 23; i < 33; ++i)
 		Keyboard::key_positions[i] = std::make_pair(95 + 113 * (i - 23), 496);
 	Keyboard::key_positions[33] = std::make_pair(265, 609);
+}
+
+bool Keyboard::loadKeyboard(SDL_Renderer* renderer) {
+
+	bool success = true;
+
+	//Load keyboard texture
+	gKeyboardTexture = texture::loadTexture(KEYBOARD_PATH, renderer);
+	if (gKeyboardTexture == NULL)
+	{
+		printf("Failed to load keyboard image!\n");
+		success = false;
+	}
+
+	//Load keyDown texture
+	gKeyDownTexture = texture::loadTexture(KEYDOWN_PATH, renderer);
+	if (gKeyDownTexture == NULL)
+	{
+		printf("Failed to load keydown image!\n");
+		success = false;
+	}
+
+	return success;
 }
 
 bool Keyboard::isValidKey(int sym) {
