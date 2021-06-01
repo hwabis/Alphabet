@@ -124,14 +124,15 @@ int main(int argc, char* args[])
 			SDL_Event e;
 
 			bool keyIsDown = false;
-			SDL_Rect* keyDownPos = new SDL_Rect{0, 0, kb->KEYDOWN_DIM, kb->KEYDOWN_DIM};
 
+			//render non changing stuff
+			//Render keyboard texture to screen
+			SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
+
+			//render changing stuff
 			//While application is running
 			while (!quit)
 			{
-				//Clear screen
-				SDL_RenderClear(gRenderer);
-
 				//Handle events on queue
 				while (SDL_PollEvent(&e) != 0)
 				{
@@ -141,24 +142,16 @@ int main(int argc, char* args[])
 						quit = true;
 					}
 					// when pressed down
-					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym) && !keyIsDown)
+					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
 					{
-						kb->keyDown(keyDownPos, e);
-						keyIsDown = true;
+						kb->keyDown(gRenderer, e);
 					}
 					else if (e.type == SDL_KEYUP)
 					{
-						keyIsDown = false;
+						kb->keyUp(gRenderer, e);
+						SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
 					}
 				}
-
-				// when held down
-				if (keyIsDown) {
-					SDL_RenderCopy(gRenderer, kb->gKeyDownTexture, NULL, keyDownPos);
-				}
-
-				//Render keyboard texture to screen
-				SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);

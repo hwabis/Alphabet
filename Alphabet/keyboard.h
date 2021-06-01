@@ -20,6 +20,7 @@ struct Keyboard
 	Mix_Chunk* onPressSound = NULL;
 
 	enum key_names {
+		//is this really needed
 		q, w, e, r, t, y, u, i, o, p, leftBracket, rightBracket,
 		a, s, d, f, g, h, j, k, l, semicolon, quote,
 		z, x, c, v, b, n, m, comma, period, slash,
@@ -27,10 +28,12 @@ struct Keyboard
 	};
 	int validKeys[key_names::numberOfKeys];
 	std::pair<int, int> key_positions[numberOfKeys];
+	bool pressedKeys[key_names::numberOfKeys];
 
 	void initKeyboard();
 	bool loadKeyboard(SDL_Renderer* renderer);
 	bool isValidKey(int sym);
-	void keyDown(SDL_Rect* keyDownPos, SDL_Event e);
+	void keyDown(SDL_Renderer* renderer, SDL_Event e);
+	void keyUp(SDL_Renderer* renderer, SDL_Event e);
 	void destroy();
 };

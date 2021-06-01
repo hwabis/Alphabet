@@ -84,149 +84,41 @@ bool Keyboard::isValidKey(int sym) {
 	return false;
 }
 
-void Keyboard::keyDown(SDL_Rect* keyDownPos, SDL_Event e) {
-	// set keyDownPos
-	switch (e.key.keysym.sym)
-	{
-	case SDLK_q:
-		keyDownPos->x = key_positions[key_names::q].first;
-		keyDownPos->y = key_positions[key_names::q].second;
-		break;
-	case SDLK_w:
-		keyDownPos->x = key_positions[key_names::w].first;
-		keyDownPos->y = key_positions[key_names::w].second;
-		break;
-	case SDLK_e:
-		keyDownPos->x = key_positions[key_names::e].first;
-		keyDownPos->y = key_positions[key_names::e].second;
-		break;
-	case SDLK_r:
-		keyDownPos->x = key_positions[key_names::r].first;
-		keyDownPos->y = key_positions[key_names::r].second;
-		break;
-	case SDLK_t:
-		keyDownPos->x = key_positions[key_names::t].first;
-		keyDownPos->y = key_positions[key_names::t].second;
-		break;
-	case SDLK_y:
-		keyDownPos->x = key_positions[key_names::y].first;
-		keyDownPos->y = key_positions[key_names::y].second;
-		break;
-	case SDLK_u:
-		keyDownPos->x = key_positions[key_names::u].first;
-		keyDownPos->y = key_positions[key_names::u].second;
-		break;
-	case SDLK_i:
-		keyDownPos->x = key_positions[key_names::i].first;
-		keyDownPos->y = key_positions[key_names::i].second;
-		break;
-	case SDLK_o:
-		keyDownPos->x = key_positions[key_names::o].first;
-		keyDownPos->y = key_positions[key_names::o].second;
-		break;
-	case SDLK_p:
-		keyDownPos->x = key_positions[key_names::p].first;
-		keyDownPos->y = key_positions[key_names::p].second;
-		break;
-	case SDLK_LEFTBRACKET:
-		keyDownPos->x = key_positions[key_names::leftBracket].first;
-		keyDownPos->y = key_positions[key_names::leftBracket].second;
-		break;
-	case SDLK_RIGHTBRACKET:
-		keyDownPos->x = key_positions[key_names::rightBracket].first;
-		keyDownPos->y = key_positions[key_names::rightBracket].second;
-		break;
-	case SDLK_a:
-		keyDownPos->x = key_positions[key_names::a].first;
-		keyDownPos->y = key_positions[key_names::a].second;
-		break;
-	case SDLK_s:
-		keyDownPos->x = key_positions[key_names::s].first;
-		keyDownPos->y = key_positions[key_names::s].second;
-		break;
-	case SDLK_d:
-		keyDownPos->x = key_positions[key_names::d].first;
-		keyDownPos->y = key_positions[key_names::d].second;
-		break;
-	case SDLK_f:
-		keyDownPos->x = key_positions[key_names::f].first;
-		keyDownPos->y = key_positions[key_names::f].second;
-		break;
-	case SDLK_g:
-		keyDownPos->x = key_positions[key_names::g].first;
-		keyDownPos->y = key_positions[key_names::g].second;
-		break;
-	case SDLK_h:
-		keyDownPos->x = key_positions[key_names::h].first;
-		keyDownPos->y = key_positions[key_names::h].second;
-		break;
-	case SDLK_j:
-		keyDownPos->x = key_positions[key_names::j].first;
-		keyDownPos->y = key_positions[key_names::j].second;
-		break;
-	case SDLK_k:
-		keyDownPos->x = key_positions[key_names::k].first;
-		keyDownPos->y = key_positions[key_names::k].second;
-		break;
-	case SDLK_l:
-		keyDownPos->x = key_positions[key_names::l].first;
-		keyDownPos->y = key_positions[key_names::l].second;
-		break;
-	case SDLK_SEMICOLON:
-		keyDownPos->x = key_positions[key_names::semicolon].first;
-		keyDownPos->y = key_positions[key_names::semicolon].second;
-		break;
-	case SDLK_QUOTE:
-		keyDownPos->x = key_positions[key_names::quote].first;
-		keyDownPos->y = key_positions[key_names::quote].second;
-		break;
-	case SDLK_z:
-		keyDownPos->x = key_positions[key_names::z].first;
-		keyDownPos->y = key_positions[key_names::z].second;
-		break;
-	case SDLK_x:
-		keyDownPos->x = key_positions[key_names::x].first;
-		keyDownPos->y = key_positions[key_names::x].second;
-		break;
-	case SDLK_c:
-		keyDownPos->x = key_positions[key_names::c].first;
-		keyDownPos->y = key_positions[key_names::c].second;
-		break;
-	case SDLK_v:
-		keyDownPos->x = key_positions[key_names::v].first;
-		keyDownPos->y = key_positions[key_names::v].second;
-		break;
-	case SDLK_b:
-		keyDownPos->x = key_positions[key_names::b].first;
-		keyDownPos->y = key_positions[key_names::b].second;
-		break;
-	case SDLK_n:
-		keyDownPos->x = key_positions[key_names::n].first;
-		keyDownPos->y = key_positions[key_names::n].second;
-		break;
-	case SDLK_m:
-		keyDownPos->x = key_positions[key_names::m].first;
-		keyDownPos->y = key_positions[key_names::m].second;
-		break;
-	case SDLK_COMMA:
-		keyDownPos->x = key_positions[key_names::comma].first;
-		keyDownPos->y = key_positions[key_names::comma].second;
-		break;
-	case SDLK_PERIOD:
-		keyDownPos->x = key_positions[key_names::period].first;
-		keyDownPos->y = key_positions[key_names::period].second;
-		break;
-	case SDLK_SLASH:
-		keyDownPos->x = key_positions[key_names::slash].first;
-		keyDownPos->y = key_positions[key_names::slash].second;
-		break;
-	case SDLK_SPACE:
-		keyDownPos->x = key_positions[key_names::spacebar].first;
-		keyDownPos->y = key_positions[key_names::spacebar].second;
-		break;
+void Keyboard::keyDown(SDL_Renderer* renderer, SDL_Event e) {
+	for (int i = 0; i < key_names::numberOfKeys; ++i) {
+		//check it's not already being pressed
+		if (e.key.keysym.sym == validKeys[i] && pressedKeys[i] == false) {
+			pressedKeys[i] = true;
+
+			SDL_Rect* keyDownPos = new SDL_Rect{ 0, 0, KEYDOWN_DIM, KEYDOWN_DIM };
+			for (int j = 0; j < key_names::numberOfKeys; ++j) {
+				if (e.key.keysym.sym == validKeys[j]) {
+					keyDownPos->x = key_positions[j].first;
+					keyDownPos->y = key_positions[j].second;
+				}
+			}
+			SDL_RenderCopy(renderer, gKeyDownTexture, NULL, keyDownPos);
+			Mix_PlayChannel(-1, onPressSound, 0);
+		}
 	}
-	//play press sound
-	Mix_PlayChannel(-1, onPressSound, 0);
+}
+
+void Keyboard::keyUp(SDL_Renderer* renderer, SDL_Event e) {
+	SDL_RenderClear(renderer);
+	for (int i = 0; i < key_names::numberOfKeys; ++i) {
+		if (pressedKeys[i]) {
+			if (e.key.keysym.sym == validKeys[i]) {
+				//found the key we let go of
+				pressedKeys[i] = false;
+			}
+			else {
+				SDL_Rect* keyDownPos = new SDL_Rect{ 0, 0, KEYDOWN_DIM, KEYDOWN_DIM };
+				keyDownPos->x = key_positions[i].first;
+				keyDownPos->y = key_positions[i].second;
+				SDL_RenderCopy(renderer, gKeyDownTexture, NULL, keyDownPos);
+			}
+		}
+	}
 }
 
 void Keyboard::destroy() {
