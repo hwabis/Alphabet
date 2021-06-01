@@ -30,16 +30,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="texture.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Alphabet.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\sprites\kb.png" />
-    <Image Include="res\sprites\keydown.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="res\sounds\press.wav" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
