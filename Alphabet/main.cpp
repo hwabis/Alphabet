@@ -126,8 +126,6 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 
-			bool keyIsDown = false;
-
 			//render non changing stuff
 			//Render keyboard texture to screen
 			SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
