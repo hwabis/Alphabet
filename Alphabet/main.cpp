@@ -6,6 +6,7 @@
 #include <string>
 #include <utility>
 #include <keyboard.h>
+#include <music.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -27,6 +28,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 Keyboard* kb = new Keyboard();
+Music* music = new Music();
 
 bool init()
 {
@@ -84,12 +86,13 @@ bool init()
 
 bool loadMedia()
 {
-	return kb->loadKeyboard(gRenderer);
+	return (kb->loadKeyboard(gRenderer) && music->loadMusic());
 }
 
 void close()
 {
 	kb->destroy();
+	music->destroy();
 
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);
@@ -128,6 +131,7 @@ int main(int argc, char* args[])
 			//render non changing stuff
 			//Render keyboard texture to screen
 			SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
+			music->playSong();
 
 			//render changing stuff
 			//While application is running
