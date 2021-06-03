@@ -10,8 +10,8 @@
 #include <background.h>
 
 //Screen dimension constants
-static const int SCREEN_WIDTH = 1366;
-static const int SCREEN_HEIGHT = 768;
+const int SCREEN_WIDTH = 1366;
+const int SCREEN_HEIGHT = 768;
 
 //Starts up SDL and creates window
 bool init();
