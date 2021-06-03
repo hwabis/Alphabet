@@ -7,10 +7,11 @@
 #include <utility>
 #include <keyboard.h>
 #include <music.h>
+#include <background.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1366;
-const int SCREEN_HEIGHT = 768;
+static const int SCREEN_WIDTH = 1366;
+static const int SCREEN_HEIGHT = 768;
 
 //Starts up SDL and creates window
 bool init();
@@ -29,6 +30,7 @@ SDL_Renderer* gRenderer = NULL;
 
 Keyboard* kb = new Keyboard();
 Music* music = new Music();
+Background* bg = new Background();
 
 bool init()
 {
@@ -86,13 +88,14 @@ bool init()
 
 bool loadMedia()
 {
-	return (kb->loadKeyboard(gRenderer) && music->loadMusic());
+	return (kb->loadKeyboard(gRenderer) && music->loadMusic() && bg->loadBackground(gRenderer, bg->alpha));
 }
 
 void close()
 {
 	kb->destroy();
 	music->destroy();
+	bg->destroy();
 
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);
@@ -128,6 +131,8 @@ int main(int argc, char* args[])
 
 			//render non changing stuff
 			//Render keyboard texture to screen
+			//TODO: make this all one method...?
+			SDL_RenderCopy(gRenderer, bg->bgTexture, NULL, bg->getArea());
 			SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
 			music->playSong();
 
@@ -151,6 +156,7 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYUP)
 					{
 						kb->keyUp(gRenderer, e);
+						SDL_RenderCopy(gRenderer, bg->bgTexture, NULL, bg->getArea());
 						SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
 					}
 				}
