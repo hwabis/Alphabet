@@ -24,7 +24,7 @@ struct Keyboard
 		q, w, e, r, t, y, u, i, o, p, leftBracket, rightBracket,
 		a, s, d, f, g, h, j, k, l, semicolon, quote,
 		z, x, c, v, b, n, m, comma, period, slash,
-		spacebar, numberOfKeys
+		numberOfKeys
 	};
 	int validKeys[key_names::numberOfKeys];
 	std::pair<int, int> key_positions[numberOfKeys];

@@ -5,7 +5,7 @@
 
 struct Music
 {
-	const char* MUSIC_PATH = "res/songs/nagi.mp3";
+	const char* MUSIC_PATH = "res/songs/Nagi -nagi-.mp3";
 
 	Mix_Music* song = NULL;
 

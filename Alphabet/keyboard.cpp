@@ -34,15 +34,13 @@ void Keyboard::initKeyboard() {
 	validKeys[30] = SDLK_COMMA;
 	validKeys[31] = SDLK_PERIOD;
 	validKeys[32] = SDLK_SLASH;
-	validKeys[33] = SDLK_SPACE;
 
 	for (int i = 0; i < 12; ++i)
-		Keyboard::key_positions[i] = std::make_pair(9 + 113 * i, 270);
+		Keyboard::key_positions[i] = std::make_pair(9 + 113 * i, 416);
 	for (int i = 12; i < 23; ++i)
-		Keyboard::key_positions[i] = std::make_pair(37 + 113 * (i - 12), 383);
+		Keyboard::key_positions[i] = std::make_pair(37 + 113 * (i - 12), 529);
 	for (int i = 23; i < 33; ++i)
-		Keyboard::key_positions[i] = std::make_pair(95 + 113 * (i - 23), 496);
-	Keyboard::key_positions[33] = std::make_pair(265, 609);
+		Keyboard::key_positions[i] = std::make_pair(95 + 113 * (i - 23), 642);
 }
 
 bool Keyboard::loadKeyboard(SDL_Renderer* renderer) {
