@@ -35,5 +35,6 @@ struct Keyboard
 	bool isValidKey(int sym);
 	void keyDown(SDL_Renderer* renderer, SDL_Event e);
 	void keyUp(SDL_Renderer* renderer, SDL_Event e);
+	void render(SDL_Renderer* renderer);
 	void destroy();
 };

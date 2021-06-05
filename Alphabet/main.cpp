@@ -28,9 +28,9 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-Keyboard* kb = new Keyboard();
-Music* music = new Music();
-Background* bg = new Background();
+Keyboard* kb = new Keyboard(); //has path but it's fine
+Music* music = new Music(); //has path but needs to be changeable
+Background* bg = new Background(); //has path but needs to be changeable
 
 bool init()
 {
@@ -132,8 +132,8 @@ int main(int argc, char* args[])
 			//render non changing stuff
 			//Render keyboard texture to screen
 			//TODO: make this all one method...?
-			SDL_RenderCopy(gRenderer, bg->bgTexture, NULL, bg->getArea());
-			SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
+			bg->render(gRenderer);
+			kb->render(gRenderer);
 			music->playSong();
 
 			//render changing stuff
@@ -156,8 +156,9 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYUP)
 					{
 						kb->keyUp(gRenderer, e);
-						SDL_RenderCopy(gRenderer, bg->bgTexture, NULL, bg->getArea());
-						SDL_RenderCopy(gRenderer, kb->gKeyboardTexture, NULL, NULL);
+						//here too
+						bg->render(gRenderer);
+						kb->render(gRenderer);
 					}
 				}
 

@@ -119,6 +119,10 @@ void Keyboard::keyUp(SDL_Renderer* renderer, SDL_Event e) {
 	}
 }
 
+void Keyboard::render(SDL_Renderer* renderer) {
+	SDL_RenderCopy(renderer, gKeyboardTexture, NULL, NULL);
+}
+
 void Keyboard::destroy() {
 	//Free loaded keyboard image
 	SDL_DestroyTexture(gKeyboardTexture);

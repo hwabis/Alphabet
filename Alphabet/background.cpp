@@ -25,6 +25,11 @@ SDL_Rect* Background::getArea() {
 	return new SDL_Rect{ 1366/2 - w/2, 0, w, h };
 }
 
+void Background::render(SDL_Renderer* renderer) {
+	SDL_RenderCopy(renderer, bgTexture, NULL, getArea());
+
+}
+
 void Background::destroy() {
 	SDL_DestroyTexture(bgTexture);
 	bgTexture = NULL;
