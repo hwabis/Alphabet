@@ -8,6 +8,7 @@
 #include <keyboard.h>
 #include <music.h>
 #include <background.h>
+#include <note.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -31,6 +32,7 @@ SDL_Renderer* gRenderer = NULL;
 Keyboard* kb = new Keyboard(); //has path but it's fine
 Music* music = new Music(); //has path but needs to be changeable
 Background* bg = new Background(); //has path but needs to be changeable
+Note* note = new Note(); //testing purposes
 
 bool init()
 {
@@ -61,7 +63,7 @@ bool init()
 		else
 		{
 			//Create renderer for window
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			if (gRenderer == NULL)
 			{
 				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
@@ -81,14 +83,16 @@ bool init()
 			}
 		}
 	}
-	kb->initKeyboard();
 
 	return success;
 }
 
 bool loadMedia()
 {
-	return (kb->loadKeyboard(gRenderer) && music->loadMusic() && bg->loadBackground(gRenderer, bg->alpha));
+	return (kb->loadKeyboard(gRenderer) 
+		&& music->loadMusic() 
+		&& bg->loadBackground(gRenderer, bg->alpha)
+		&& note->loadNote(gRenderer));
 }
 
 void close()
@@ -123,23 +127,18 @@ int main(int argc, char* args[])
 		}
 		else
 		{
-			//Main loop flag
-			bool quit = false;
-
 			//Event handler
 			SDL_Event e;
 
-			//render non changing stuff
-			//Render keyboard texture to screen
-			//TODO: make this all one method...?
-			bg->render(gRenderer);
-			kb->render(gRenderer);
-			music->playSong();
+			Uint32 startTime = SDL_GetTicks();
 
-			//render changing stuff
+			music->playSong();
+			bool quit = false;
 			//While application is running
 			while (!quit)
 			{
+				SDL_RenderClear(gRenderer);
+
 				//Handle events on queue
 				while (SDL_PollEvent(&e) != 0)
 				{
@@ -156,11 +155,13 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYUP)
 					{
 						kb->keyUp(gRenderer, e);
-						//here too
-						bg->render(gRenderer);
-						kb->render(gRenderer);
 					}
 				}
+
+				bg->render(gRenderer);
+				kb->render(gRenderer);
+				note->move(SDL_GetTicks() - startTime);
+				note->render(gRenderer);
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);

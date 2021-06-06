@@ -23,11 +23,13 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="music.cpp" />
+    <ClCompile Include="note.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="music.h" />
+    <ClInclude Include="note.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="texture.h" />
   </ItemGroup>

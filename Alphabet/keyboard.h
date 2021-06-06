@@ -26,11 +26,10 @@ struct Keyboard
 		z, x, c, v, b, n, m, comma, period, slash,
 		numberOfKeys
 	};
-	int validKeys[key_names::numberOfKeys];
+	int validKeys[numberOfKeys];
 	std::pair<int, int> key_positions[numberOfKeys];
-	bool pressedKeys[key_names::numberOfKeys];
+	bool pressedKeys[numberOfKeys];
 
-	void initKeyboard();
 	bool loadKeyboard(SDL_Renderer* renderer);
 	bool isValidKey(int sym);
 	void keyDown(SDL_Renderer* renderer, SDL_Event e);

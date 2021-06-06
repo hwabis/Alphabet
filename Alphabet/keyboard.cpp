@@ -1,6 +1,6 @@
 #include "keyboard.h"
 
-void Keyboard::initKeyboard() {
+bool Keyboard::loadKeyboard(SDL_Renderer* renderer) {
 	validKeys[0] = SDLK_q;
 	validKeys[1] = SDLK_w;
 	validKeys[2] = SDLK_e;
@@ -36,14 +36,11 @@ void Keyboard::initKeyboard() {
 	validKeys[32] = SDLK_SLASH;
 
 	for (int i = 0; i < 12; ++i)
-		Keyboard::key_positions[i] = std::make_pair(9 + 113 * i, 416);
+		key_positions[i] = std::make_pair(9 + 113 * i, 416);
 	for (int i = 12; i < 23; ++i)
-		Keyboard::key_positions[i] = std::make_pair(37 + 113 * (i - 12), 529);
+		key_positions[i] = std::make_pair(37 + 113 * (i - 12), 529);
 	for (int i = 23; i < 33; ++i)
-		Keyboard::key_positions[i] = std::make_pair(95 + 113 * (i - 23), 642);
-}
-
-bool Keyboard::loadKeyboard(SDL_Renderer* renderer) {
+		key_positions[i] = std::make_pair(95 + 113 * (i - 23), 642);
 
 	bool success = true;
 
@@ -83,43 +80,33 @@ bool Keyboard::isValidKey(int sym) {
 }
 
 void Keyboard::keyDown(SDL_Renderer* renderer, SDL_Event e) {
-	for (int i = 0; i < key_names::numberOfKeys; ++i) {
+	for (int i = 0; i < numberOfKeys; ++i) {
 		//check it's not already being pressed
 		if (e.key.keysym.sym == validKeys[i] && pressedKeys[i] == false) {
 			pressedKeys[i] = true;
-
-			SDL_Rect* keyDownPos = new SDL_Rect{ 0, 0, KEYDOWN_DIM, KEYDOWN_DIM };
-			for (int j = 0; j < key_names::numberOfKeys; ++j) {
-				if (e.key.keysym.sym == validKeys[j]) {
-					keyDownPos->x = key_positions[j].first;
-					keyDownPos->y = key_positions[j].second;
-				}
-			}
-			SDL_RenderCopy(renderer, gKeyDownTexture, NULL, keyDownPos);
 			Mix_PlayChannel(-1, onPressSound, 0);
 		}
 	}
 }
 
 void Keyboard::keyUp(SDL_Renderer* renderer, SDL_Event e) {
-	SDL_RenderClear(renderer);
-	for (int i = 0; i < key_names::numberOfKeys; ++i) {
-		if (pressedKeys[i]) {
-			if (e.key.keysym.sym == validKeys[i]) {
-				//found the key we let go of
-				pressedKeys[i] = false;
-			}
-			else {
-				SDL_Rect* keyDownPos = new SDL_Rect{ 0, 0, KEYDOWN_DIM, KEYDOWN_DIM };
-				keyDownPos->x = key_positions[i].first;
-				keyDownPos->y = key_positions[i].second;
-				SDL_RenderCopy(renderer, gKeyDownTexture, NULL, keyDownPos);
-			}
+	for (int i = 0; i < numberOfKeys; ++i) {
+		if (pressedKeys[i] && e.key.keysym.sym == validKeys[i]) {
+			pressedKeys[i] = false;
 		}
 	}
 }
 
 void Keyboard::render(SDL_Renderer* renderer) {
+	for (int i = 0; i < numberOfKeys; ++i) {
+		if (pressedKeys[i]) {
+			//is this bad lol.. run out of memory?
+			SDL_Rect* keyDownPos = new SDL_Rect{ 0, 0, KEYDOWN_DIM, KEYDOWN_DIM };
+			keyDownPos->x = key_positions[i].first;
+			keyDownPos->y = key_positions[i].second;
+			SDL_RenderCopy(renderer, gKeyDownTexture, NULL, keyDownPos);
+		}
+	}
 	SDL_RenderCopy(renderer, gKeyboardTexture, NULL, NULL);
 }
 
