@@ -2,11 +2,11 @@
 
 bool Note::loadNote(SDL_Renderer* renderer) {
 
-	scrollSpeed = 10;
+	//100 to 2000 ish? check taiko's max AR
+	scrollSpeed = 500.0f;
 
 	bool success = true;
 
-	//Load keyboard texture
 	noteTexture = Texture::loadTexture(NOTE_PATH, renderer);
 	if (noteTexture == NULL)
 	{
@@ -17,11 +17,18 @@ bool Note::loadNote(SDL_Renderer* renderer) {
 	return success;
 }
 
-void Note::move(Uint32 timeStep) {
-	pos->x -= scrollSpeed;
+void Note::move(float timeStep) {
+	pos->x -= scrollSpeed*timeStep;
+	if (pos->x <= 0) {
+		destroy();
+	}
 }
-
 
 void Note::render(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, noteTexture, NULL, pos);
+}
+
+void Note::destroy() {
+	SDL_DestroyTexture(noteTexture);
+	noteTexture = NULL;
 }

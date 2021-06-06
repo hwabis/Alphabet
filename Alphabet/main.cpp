@@ -130,7 +130,7 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 
-			Uint32 startTime = SDL_GetTicks();
+			float startTime = (float)SDL_GetTicks();
 
 			music->playSong();
 			bool quit = false;
@@ -160,7 +160,8 @@ int main(int argc, char* args[])
 
 				bg->render(gRenderer);
 				kb->render(gRenderer);
-				note->move(SDL_GetTicks() - startTime);
+				note->move(((float)SDL_GetTicks() - startTime)/1000.f);
+				startTime = (float)SDL_GetTicks();
 				note->render(gRenderer);
 
 				//Update screen
