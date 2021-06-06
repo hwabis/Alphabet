@@ -5,9 +5,10 @@
 #include <texture.h>
 struct Note
 {
-	const std::string NOTE_PATH = "res/sprites/bar.png";
-	const int NOTE_HEIGHT = 260;
-	const int NOTE_WIDTH = 18;
+	std::string NOTE_PATH = "res/sprites/bar.png";
+	int NOTE_HEIGHT = 260;
+	int NOTE_WIDTH = 18;
+	int HIT_AT = 240;
 
 	float hitTime;
 	float hitWindow;
@@ -21,5 +22,5 @@ struct Note
 	void render(SDL_Renderer* renderer);
 	void destroy();
 
-	SDL_Rect* pos = new SDL_Rect{ 1366, 50, NOTE_WIDTH, NOTE_HEIGHT };
+	SDL_Rect* pos = new SDL_Rect{ 1350, 50, NOTE_WIDTH, NOTE_HEIGHT };
 };

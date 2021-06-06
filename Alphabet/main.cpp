@@ -9,6 +9,8 @@
 #include <music.h>
 #include <background.h>
 #include <note.h>
+#include <map.h>
+#include <timer.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -32,7 +34,8 @@ SDL_Renderer* gRenderer = NULL;
 Keyboard* kb = new Keyboard(); //has path but it's fine
 Music* music = new Music(); //has path but needs to be changeable
 Background* bg = new Background(); //has path but needs to be changeable
-Note* note = new Note(); //testing purposes
+Map* map = new Map();
+Timer* timer = new Timer();
 
 bool init()
 {
@@ -89,10 +92,19 @@ bool init()
 
 bool loadMedia()
 {
+	//make notes for map
+	Note* a = new Note();
+	Note* b = new Note();
+	Note* c = new Note();
+	a->loadNote(gRenderer);
+	b->loadNote(gRenderer);
+	c->loadNote(gRenderer);
+	std::vector<Note*> notes = { a,b,c };
+
 	return (kb->loadKeyboard(gRenderer) 
 		&& music->loadMusic() 
 		&& bg->loadBackground(gRenderer, bg->alpha)
-		&& note->loadNote(gRenderer));
+		&& map->loadMap(gRenderer, notes));
 }
 
 void close()
@@ -130,9 +142,8 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 
-			float startTime = (float)SDL_GetTicks();
-
 			music->playSong();
+			timer->startTime = SDL_GetTicks();
 			bool quit = false;
 			//While application is running
 			while (!quit)
@@ -160,10 +171,11 @@ int main(int argc, char* args[])
 
 				bg->render(gRenderer);
 				kb->render(gRenderer);
-				note->move(((float)SDL_GetTicks() - startTime)/1000.f);
-				startTime = (float)SDL_GetTicks();
-				note->render(gRenderer);
 
+				map->tick(timer->getTimeStep());
+				timer->restartTimer();
+				map->render(gRenderer);
+				
 				//Update screen
 				SDL_RenderPresent(gRenderer);
 			}
