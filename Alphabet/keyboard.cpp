@@ -110,7 +110,7 @@ void Keyboard::render(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, gKeyboardTexture, NULL, NULL);
 }
 
-void Keyboard::destroy() {
+void Keyboard::free() {
 	//Free loaded keyboard image
 	SDL_DestroyTexture(gKeyboardTexture);
 	gKeyboardTexture = NULL;

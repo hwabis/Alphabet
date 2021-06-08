@@ -9,8 +9,8 @@ struct Note
 	std::string NOTE_PATH = "res/sprites/bar.png";
 	const int NOTE_HEIGHT = 260;
 	const int NOTE_WIDTH = 18;
-	const int HIT_AT_X = 240;
-	const int SPAWN_LOC = 1366;
+	const float HIT_AT_X = 240;
+	const float SPAWN_LOC = 1366;
 
 	bool shown = false;
 
@@ -24,7 +24,7 @@ struct Note
 	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration);
 	void tick(SDL_Renderer* renderer, Timer* timer);
 	void render(SDL_Renderer* renderer);
-	void destroy();
+	void free();
 
 	float xPos;
 	SDL_Rect* pos = new SDL_Rect{ (int)xPos, 50, NOTE_WIDTH, NOTE_HEIGHT };

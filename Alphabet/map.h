@@ -9,23 +9,10 @@ struct Map
 	int overallDifficulty;
 	int approachRate;
 
-	bool loadMap(SDL_Renderer* renderer, std::vector<Note*> notes) {
-		this->notes = notes;
-		for (Note* note : notes) {
-			note->loadNote(renderer, note->hitTime, note->noteDuration);
-		}
-		return true;
-	}
+	bool loadMap(SDL_Renderer* renderer, std::vector<Note*> notes);
+	void tick(SDL_Renderer* renderer, Timer* timer);
+	void render(SDL_Renderer* renderer);
 
-	void tick(SDL_Renderer* renderer, Timer* timer) {
-		for (Note* note : notes) {
-			note->tick(renderer, timer);
-		}
-	}
-
-	void render(SDL_Renderer* renderer) {
-		for (Note* note : notes) {
-			note->render(renderer);
-		}
-	}
+	float getDelay();
+	void delayAllNotes(float delay);
 };

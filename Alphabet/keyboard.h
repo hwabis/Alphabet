@@ -35,5 +35,5 @@ struct Keyboard
 	void keyDown(SDL_Renderer* renderer, SDL_Event e);
 	void keyUp(SDL_Renderer* renderer, SDL_Event e);
 	void render(SDL_Renderer* renderer);
-	void destroy();
+	void free();
 };

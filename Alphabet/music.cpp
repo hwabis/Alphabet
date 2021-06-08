@@ -17,7 +17,7 @@ void Music::playSong() {
     Mix_PlayMusic(song, -1);
 }
 
-void Music::destroy() {
+void Music::free() {
     Mix_FreeMusic(song);
     song = NULL;
 }

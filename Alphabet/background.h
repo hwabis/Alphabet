@@ -11,5 +11,5 @@ struct Background
 	bool loadBackground(SDL_Renderer* renderer, Uint8 alpha);
 	SDL_Rect* getArea();
 	void render(SDL_Renderer* renderer);
-	void destroy();
+	void free();
 };

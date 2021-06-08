@@ -96,9 +96,9 @@ bool loadMedia()
 	Note* a = new Note();
 	Note* b = new Note();
 	Note* c = new Note();
-	a->loadNote(gRenderer, 3000, 3000);
-	b->loadNote(gRenderer, 4000, 3000);
-	c->loadNote(gRenderer, 5000, 3000);
+	a->loadNote(gRenderer, 984, 5000);
+	b->loadNote(gRenderer, 1449, 5000);
+	c->loadNote(gRenderer, 1681, 5000);
 	std::vector<Note*> notes = { a,b,c };
 
 	return (kb->loadKeyboard(gRenderer) 
@@ -109,9 +109,9 @@ bool loadMedia()
 
 void close()
 {
-	kb->destroy();
-	music->destroy();
-	bg->destroy();
+	kb->free();
+	music->free();
+	bg->free();
 
 	//Destroy window	
 	SDL_DestroyRenderer(gRenderer);
@@ -142,13 +142,27 @@ int main(int argc, char* args[])
 			//Event handler
 			SDL_Event e;
 
-			music->playSong();
+			bool playingSong = false;
+			float delay = map->getDelay();
+			if (delay <= 0) {
+				music->playSong();
+				playingSong = true;
+			}
+			else {
+				map->delayAllNotes(delay);
+			}
+
 			timer->resetStartTime();
-			timer->resetTickTime();
+			timer->resetTickTime(); //TODO: implement note offset...
 			bool quit = false;
 			//While application is running
 			while (!quit)
 			{
+				if (!playingSong && timer->getTime() >= delay) {
+					music->playSong();
+					playingSong = true;
+				}
+
 				SDL_RenderClear(gRenderer);
 
 				//Handle events on queue

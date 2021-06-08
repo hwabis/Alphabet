@@ -30,7 +30,7 @@ void Background::render(SDL_Renderer* renderer) {
 
 }
 
-void Background::destroy() {
+void Background::free() {
 	SDL_DestroyTexture(bgTexture);
 	bgTexture = NULL;
 }

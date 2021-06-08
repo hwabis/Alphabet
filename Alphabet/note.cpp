@@ -26,9 +26,8 @@ void Note::tick(SDL_Renderer* renderer, Timer* timer) {
 		xPos -= SPAWN_LOC*timer->getTimeStep() / noteDuration;
 		pos->x = xPos;
 		render(renderer);
-		if (pos->x <= 0) {
-			shown = false; // for good measure
-			destroy();
+		if (xPos + NOTE_WIDTH <= 0) {
+			free();
 		}
 	}
 }
@@ -37,7 +36,7 @@ void Note::render(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, noteTexture, NULL, pos);
 }
 
-void Note::destroy() {
+void Note::free() {
 	SDL_DestroyTexture(noteTexture);
 	noteTexture = NULL;
 }

@@ -11,5 +11,5 @@ struct Music
 
 	bool loadMusic();
 	void playSong();
-	void destroy();
+	void free();
 };
