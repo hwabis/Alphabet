@@ -1,9 +1,10 @@
 #include "Note.h"
 
-bool Note::loadNote(SDL_Renderer* renderer) {
+bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration) {
 
-	//100 to 2000 ish? check taiko's max AR
-	scrollSpeed = 500.0f;
+	this->xPos = SPAWN_LOC;
+	this->hitTime = hitTime;
+	this->noteDuration = duration;
 
 	bool success = true;
 
@@ -17,10 +18,18 @@ bool Note::loadNote(SDL_Renderer* renderer) {
 	return success;
 }
 
-void Note::move(float timeStep) {
-	pos->x -= scrollSpeed*timeStep;
-	if (pos->x <= 0) {
-		destroy();
+void Note::tick(SDL_Renderer* renderer, Timer* timer) {
+	if (!shown && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
+		shown = true;
+	}
+	if (shown) {
+		xPos -= SPAWN_LOC*timer->getTimeStep() / noteDuration;
+		pos->x = xPos;
+		render(renderer);
+		if (pos->x <= 0) {
+			shown = false; // for good measure
+			destroy();
+		}
 	}
 }
 

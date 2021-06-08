@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <note.h>
 #include <vector>
+#include <timer.h>
 struct Map
 {
 	std::vector<Note*> notes;
@@ -11,14 +12,14 @@ struct Map
 	bool loadMap(SDL_Renderer* renderer, std::vector<Note*> notes) {
 		this->notes = notes;
 		for (Note* note : notes) {
-			note->loadNote(renderer);
+			note->loadNote(renderer, note->hitTime, note->noteDuration);
 		}
 		return true;
 	}
 
-	void tick(float timeStep) {
+	void tick(SDL_Renderer* renderer, Timer* timer) {
 		for (Note* note : notes) {
-			note->move(timeStep);
+			note->tick(renderer, timer);
 		}
 	}
 

@@ -96,9 +96,9 @@ bool loadMedia()
 	Note* a = new Note();
 	Note* b = new Note();
 	Note* c = new Note();
-	a->loadNote(gRenderer);
-	b->loadNote(gRenderer);
-	c->loadNote(gRenderer);
+	a->loadNote(gRenderer, 3000, 3000);
+	b->loadNote(gRenderer, 4000, 3000);
+	c->loadNote(gRenderer, 5000, 3000);
 	std::vector<Note*> notes = { a,b,c };
 
 	return (kb->loadKeyboard(gRenderer) 
@@ -143,7 +143,8 @@ int main(int argc, char* args[])
 			SDL_Event e;
 
 			music->playSong();
-			timer->startTime = SDL_GetTicks();
+			timer->resetStartTime();
+			timer->resetTickTime();
 			bool quit = false;
 			//While application is running
 			while (!quit)
@@ -172,10 +173,9 @@ int main(int argc, char* args[])
 				bg->render(gRenderer);
 				kb->render(gRenderer);
 
-				map->tick(timer->getTimeStep());
-				timer->restartTimer();
-				map->render(gRenderer);
-				
+				map->tick(gRenderer, timer);
+				timer->resetTickTime();
+
 				//Update screen
 				SDL_RenderPresent(gRenderer);
 			}

@@ -1,12 +1,21 @@
 #pragma once
 #include <SDL.h>
-struct Timer
+class Timer
 {
-	float startTime;
-	void restartTimer() {
+public:
+	float getTimeStep() {
+		return ((float)SDL_GetTicks() - tickTime);
+	}
+	void resetTickTime() {
+		tickTime = (float)SDL_GetTicks();
+	}
+	float getTime() {
+		return SDL_GetTicks() - startTime;
+	}
+	void resetStartTime() {
 		startTime = (float)SDL_GetTicks();
 	}
-	float getTimeStep() {
-		return ((float)SDL_GetTicks() - startTime) / 1000.f;
-	}
+private:
+	float startTime;
+	float tickTime;
 };

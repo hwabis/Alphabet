@@ -3,24 +3,29 @@
 #include <SDL_image.h>
 #include <string>
 #include <texture.h>
+#include <timer.h>
 struct Note
 {
 	std::string NOTE_PATH = "res/sprites/bar.png";
-	int NOTE_HEIGHT = 260;
-	int NOTE_WIDTH = 18;
-	int HIT_AT = 240;
+	const int NOTE_HEIGHT = 260;
+	const int NOTE_WIDTH = 18;
+	const int HIT_AT_X = 240;
+	const int SPAWN_LOC = 1366;
+
+	bool shown = false;
 
 	float hitTime;
 	float hitWindow;
-	float scrollSpeed;
+	float noteDuration; //in milliseconds
 	int key; //will get from Keyboard::key_names
 
 	SDL_Texture* noteTexture = NULL;
 
-	bool loadNote(SDL_Renderer* renderer);
-	void move(float timeStep);
+	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration);
+	void tick(SDL_Renderer* renderer, Timer* timer);
 	void render(SDL_Renderer* renderer);
 	void destroy();
 
-	SDL_Rect* pos = new SDL_Rect{ 1350, 50, NOTE_WIDTH, NOTE_HEIGHT };
+	float xPos;
+	SDL_Rect* pos = new SDL_Rect{ (int)xPos, 50, NOTE_WIDTH, NOTE_HEIGHT };
 };
