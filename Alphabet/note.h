@@ -4,6 +4,7 @@
 #include <string>
 #include <texture.h>
 #include <timer.h>
+#include <keyboard.h>
 struct Note
 {
 	std::string NOTE_PATH = "res/sprites/bar.png";
@@ -13,17 +14,24 @@ struct Note
 	const float SPAWN_LOC = 1366;
 
 	bool shown = false;
+	bool done = false;
 
+	//everything is in milliseconds
 	float hitTime;
+	//windows defined by Map
 	float hitWindow;
-	float noteDuration; //in milliseconds
-	int key; //will get from Keyboard::key_names
+	float perfWindow;
+	float missWindow;
+	float noteDuration; 
+	//will get from Keyboard::key_names
+	int key; 
 
 	SDL_Texture* noteTexture = NULL;
 
-	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration);
+	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key);
 	void tick(SDL_Renderer* renderer, Timer* timer);
 	void render(SDL_Renderer* renderer);
+	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
 	void free();
 
 	float xPos;

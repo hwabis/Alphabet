@@ -1,10 +1,11 @@
 #include "Note.h"
 
-bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration) {
+bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key) {
 
 	this->xPos = SPAWN_LOC;
 	this->hitTime = hitTime;
 	this->noteDuration = duration;
+	this->key = key;
 
 	bool success = true;
 
@@ -19,7 +20,7 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration) {
 }
 
 void Note::tick(SDL_Renderer* renderer, Timer* timer) {
-	if (!shown && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
+	if (!shown && !done && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
 		shown = true;
 	}
 	if (shown) {
@@ -34,6 +35,17 @@ void Note::tick(SDL_Renderer* renderer, Timer* timer) {
 
 void Note::render(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, noteTexture, NULL, pos);
+}
+
+void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+	//we already know SDL_KEYDOWN
+	if (abs(timer->getTime() - hitTime) <= missWindow) {
+		if (e.key.keysym.sym == key) {
+			free();
+			done = true;
+			//TODO: only count for the first note registered... will probably have to do stuff in Map
+		}
+	}
 }
 
 void Note::free() {

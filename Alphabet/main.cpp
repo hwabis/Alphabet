@@ -96,9 +96,9 @@ bool loadMedia()
 	Note* a = new Note();
 	Note* b = new Note();
 	Note* c = new Note();
-	a->loadNote(gRenderer, 984, 5000);
-	b->loadNote(gRenderer, 1449, 5000);
-	c->loadNote(gRenderer, 1681, 5000);
+	a->loadNote(gRenderer, 984, 2000, SDLK_q);
+	b->loadNote(gRenderer, 1449, 2000, SDLK_q);
+	c->loadNote(gRenderer, 1681, 2000, SDLK_q);
 	std::vector<Note*> notes = { a,b,c };
 
 	return (kb->loadKeyboard(gRenderer) 
@@ -177,6 +177,7 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
 					{
 						kb->keyDown(gRenderer, e);
+						map->handleInput(gRenderer, timer, e);
 					}
 					else if (e.type == SDL_KEYUP)
 					{
