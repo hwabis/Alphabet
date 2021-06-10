@@ -34,7 +34,7 @@ SDL_Renderer* gRenderer = NULL;
 Keyboard* kb = new Keyboard(); //has path but it's fine
 Music* music = new Music(); //has path but needs to be changeable
 Background* bg = new Background(); //has path but needs to be changeable
-Map* map = new Map();
+Map* map = new Map(); //sprite paths are fine; map path is not...?
 Timer* timer = new Timer();
 
 bool init()

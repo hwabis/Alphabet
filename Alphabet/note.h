@@ -30,9 +30,9 @@ struct Note
 	SDL_Texture* noteTexture = NULL;
 
 	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key);
-	void tick(SDL_Renderer* renderer, Timer* timer);
+	int tick(SDL_Renderer* renderer, Timer* timer);
 	void render(SDL_Renderer* renderer);
-	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
+	int handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
 	void free();
 
 	float getTimeFromHit(Timer* timer);

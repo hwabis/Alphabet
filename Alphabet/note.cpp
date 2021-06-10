@@ -19,8 +19,8 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int k
 	return success;
 }
 
-void Note::tick(SDL_Renderer* renderer, Timer* timer) {
-	if (!shown && !done && !missed && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
+int Note::tick(SDL_Renderer* renderer, Timer* timer) {
+	if (!shown && !done && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
 		shown = true;
 	}
 	if (shown) {
@@ -29,8 +29,9 @@ void Note::tick(SDL_Renderer* renderer, Timer* timer) {
 		render(renderer);
 
 		if (!done && !missed && getTimeFromHit(timer) >= missWindow) {
-			printf("miss by delay\n");
+			//missed by delay
 			missed = true;
+			return 1;
 		}
 
 		if (xPos + NOTE_WIDTH <= 0) {
@@ -38,27 +39,33 @@ void Note::tick(SDL_Renderer* renderer, Timer* timer) {
 			free();
 		}
 	}
+	return 0;
 }
 
 void Note::render(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, noteTexture, NULL, pos);
 }
 
-void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+int Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+	int retval = -1;
 	if (!done && e.key.keysym.sym == key) {
 		float timeDiff = abs(getTimeFromHit(timer));
 		if (timeDiff <= perfWindow) {
-			printf("perfect\n");
+			//perfect
+			retval = 2;
 		}
 		else if (timeDiff <= hitWindow) {
-			printf("ok\n");
+			//ok
+			retval = 1;
 		}
 		else {
-			printf("miss\n");
+			//miss
+			retval = 0;
 		}
 		free();
 		done = true;
 	}
+	return retval;
 }
 
 void Note::free() {
