@@ -20,14 +20,21 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int k
 }
 
 void Note::tick(SDL_Renderer* renderer, Timer* timer) {
-	if (!shown && !done && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
+	if (!shown && !done && !missed && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
 		shown = true;
 	}
 	if (shown) {
 		xPos -= SPAWN_LOC*timer->getTimeStep() / noteDuration;
 		pos->x = xPos;
 		render(renderer);
+
+		if (!done && !missed && getTimeFromHit(timer) >= missWindow) {
+			printf("miss by delay\n");
+			missed = true;
+		}
+
 		if (xPos + NOTE_WIDTH <= 0) {
+			//reached end of screen
 			free();
 		}
 	}
@@ -38,8 +45,17 @@ void Note::render(SDL_Renderer* renderer) {
 }
 
 void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
-	//we already know SDL_KEYDOWN
-	if (e.key.keysym.sym == key) {
+	if (!done && e.key.keysym.sym == key) {
+		float timeDiff = abs(getTimeFromHit(timer));
+		if (timeDiff <= perfWindow) {
+			printf("perfect\n");
+		}
+		else if (timeDiff <= hitWindow) {
+			printf("ok\n");
+		}
+		else {
+			printf("miss\n");
+		}
 		free();
 		done = true;
 	}
@@ -48,4 +64,8 @@ void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 void Note::free() {
 	SDL_DestroyTexture(noteTexture);
 	noteTexture = NULL;
+}
+
+float Note::getTimeFromHit(Timer* timer) {
+	return timer->getTime() - hitTime;
 }

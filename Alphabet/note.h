@@ -15,6 +15,7 @@ struct Note
 
 	bool shown = false;
 	bool done = false;
+	bool missed = false;
 
 	//everything is in milliseconds
 	float hitTime;
@@ -22,8 +23,8 @@ struct Note
 	float hitWindow;
 	float perfWindow;
 	float missWindow;
+
 	float noteDuration; 
-	//will get from Keyboard::key_names
 	int key; 
 
 	SDL_Texture* noteTexture = NULL;
@@ -33,6 +34,8 @@ struct Note
 	void render(SDL_Renderer* renderer);
 	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
 	void free();
+
+	float getTimeFromHit(Timer* timer);
 
 	float xPos;
 	SDL_Rect* pos = new SDL_Rect{ (int)xPos, 50, NOTE_WIDTH, NOTE_HEIGHT };
