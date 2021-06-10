@@ -39,12 +39,9 @@ void Note::render(SDL_Renderer* renderer) {
 
 void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 	//we already know SDL_KEYDOWN
-	if (abs(timer->getTime() - hitTime) <= missWindow) {
-		if (e.key.keysym.sym == key) {
-			free();
-			done = true;
-			//TODO: only count for the first note registered... will probably have to do stuff in Map
-		}
+	if (e.key.keysym.sym == key) {
+		free();
+		done = true;
 	}
 }
 

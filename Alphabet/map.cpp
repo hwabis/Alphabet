@@ -26,7 +26,10 @@ void Map::render(SDL_Renderer* renderer) {
 
 void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 	for (Note* note : notes) {
-		note->handleInput(renderer, timer, e);
+		if (abs(timer->getTime() - note->hitTime) <= note->missWindow) {
+			note->handleInput(renderer, timer, e);
+			break;
+		}
 	}
 }
 
