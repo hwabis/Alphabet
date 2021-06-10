@@ -40,9 +40,7 @@ void Map::tick(SDL_Renderer* renderer, Timer* timer) {
 		if (note->tick(renderer, timer) == 0) {
 			//missed by delay
 			renderType = 0;
-
-			feedbackShown = true;
-			feedbackTimer->resetStartTime();
+			hitNote();
 			renderFeedback(renderer, renderType);
 		}
 	}
@@ -60,14 +58,16 @@ void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 	for (Note* note : notes) {
 		if (abs(note->getTimeFromHit(timer)) <= note->missWindow) {
 			renderType = note->handleInput(renderer, timer, e);
-
-			feedbackShown = true;
-			feedbackTimer->resetStartTime();
+			hitNote();
 			renderFeedback(renderer, renderType);
-
 			break;
 		}
 	}
+}
+
+void Map::hitNote() {
+	feedbackShown = true;
+	feedbackTimer->resetStartTime();
 }
 
 void Map::renderFeedback(SDL_Renderer* renderer, int type) {

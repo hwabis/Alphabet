@@ -20,7 +20,7 @@ struct Map
 	const std::string PERFECT_PATH = "res/sprites/perfect.png";
 	const std::string OK_PATH = "res/sprites/ok.png";
 	const std::string MISS_PATH = "res/sprites/miss.png";
-	const float FEEDBACK_LENGTH = 500;
+	const float FEEDBACK_LENGTH = 300;
 
 	SDL_Texture* perfTexture = NULL;
 	SDL_Texture* okTexture = NULL;
@@ -30,6 +30,7 @@ struct Map
 	//constants not needed... 
 	SDL_Rect* feedbackPos = new SDL_Rect{ 176, 330, 150, 50 };
 	void renderFeedback(SDL_Renderer* renderer, int type);
+	void hitNote();
 	bool feedbackShown = false;
 
 	//2 for perf, 1 for ok, 0 for miss, -1 for nothing
