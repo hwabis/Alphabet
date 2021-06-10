@@ -31,7 +31,7 @@ int Note::tick(SDL_Renderer* renderer, Timer* timer) {
 		if (!done && !missed && getTimeFromHit(timer) >= missWindow) {
 			//missed by delay
 			missed = true;
-			return 1;
+			return 0;
 		}
 
 		if (xPos + NOTE_WIDTH <= 0) {
@@ -39,7 +39,7 @@ int Note::tick(SDL_Renderer* renderer, Timer* timer) {
 			free();
 		}
 	}
-	return 0;
+	return -1;
 }
 
 void Note::render(SDL_Renderer* renderer) {

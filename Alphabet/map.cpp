@@ -37,16 +37,22 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes) {
 
 void Map::tick(SDL_Renderer* renderer, Timer* timer) {
 	for (Note* note : notes) {
-		if (note->tick(renderer, timer) == 1) {
+		if (note->tick(renderer, timer) == 0) {
 			//missed by delay
-			renderFeedback(renderer, 0);
+			renderType = 0;
+
+			feedbackShown = true;
+			feedbackTimer->resetStartTime();
+			renderFeedback(renderer, renderType);
 		}
 	}
-}
-
-void Map::render(SDL_Renderer* renderer) {
-	for (Note* note : notes) {
-		note->render(renderer);
+	if (feedbackShown) {
+		if (feedbackTimer->getTime() < FEEDBACK_LENGTH) {
+			renderFeedback(renderer, renderType);
+		}
+		else {
+			feedbackShown = false;
+		}
 	}
 }
 
@@ -54,7 +60,11 @@ void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 	for (Note* note : notes) {
 		if (abs(note->getTimeFromHit(timer)) <= note->missWindow) {
 			renderType = note->handleInput(renderer, timer, e);
+
+			feedbackShown = true;
+			feedbackTimer->resetStartTime();
 			renderFeedback(renderer, renderType);
+
 			break;
 		}
 	}

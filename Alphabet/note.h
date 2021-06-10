@@ -29,6 +29,7 @@ struct Note
 
 	SDL_Texture* noteTexture = NULL;
 
+	//int return values are for Map to use
 	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key);
 	int tick(SDL_Renderer* renderer, Timer* timer);
 	void render(SDL_Renderer* renderer);
