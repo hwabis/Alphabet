@@ -188,7 +188,7 @@ int main(int argc, char* args[])
 				bg->render(gRenderer);
 				kb->render(gRenderer);
 
-				map->tick(gRenderer, timer);
+				map->tick(gRenderer, timer, kb);
 				timer->resetTickTime();
 
 				//Update screen

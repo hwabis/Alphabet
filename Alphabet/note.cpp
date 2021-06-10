@@ -15,18 +15,28 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int k
 		printf("Failed to load note image!\n");
 		success = false;
 	}
+	keyTexture = Texture::loadTexture(KEY_PATH, renderer);
+	if (noteTexture == NULL)
+	{
+		printf("Failed to load key image!\n");
+		success = false;
+	}
 
 	return success;
 }
 
-int Note::tick(SDL_Renderer* renderer, Timer* timer) {
+int Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
 	if (!shown && !done && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
 		shown = true;
 	}
 	if (shown) {
 		xPos -= SPAWN_LOC*timer->getTimeStep() / noteDuration;
 		pos->x = xPos;
-		render(renderer);
+		renderNote(renderer);
+
+		if (getTimeFromHit(timer) >= -REACT_TIME && getTimeFromHit(timer) <= 0) {
+			renderKey(renderer, key, kb);
+		}
 
 		if (!done && !missed && getTimeFromHit(timer) >= missWindow) {
 			//missed by delay
@@ -42,8 +52,21 @@ int Note::tick(SDL_Renderer* renderer, Timer* timer) {
 	return -1;
 }
 
-void Note::render(SDL_Renderer* renderer) {
+void Note::renderNote(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, noteTexture, NULL, pos);
+}
+
+void Note::renderKey(SDL_Renderer* renderer, int key, Keyboard* kb) {
+	int index = 0;
+	for (int i = 0; i < kb->numberOfKeys; ++i) {
+		if (kb->validKeys[i] == key) {
+			index = i;
+			break;
+		}
+	}
+	//UHH these 104's should come from Keyboard::KEYDOWN_DIM
+	SDL_Rect* pos = new SDL_Rect{ kb->key_positions[index].first, kb->key_positions[index].second, 104, 104 }; 
+	SDL_RenderCopy(renderer, keyTexture, NULL, pos);
 }
 
 int Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {

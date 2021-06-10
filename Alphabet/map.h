@@ -11,7 +11,7 @@ struct Map
 	int approachRate;
 
 	bool loadMap(SDL_Renderer* renderer, std::vector<Note*> notes);
-	void tick(SDL_Renderer* renderer, Timer* timer);
+	void tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb);
 	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
 
 	float getDelay();
