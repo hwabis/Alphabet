@@ -21,8 +21,8 @@ struct Keyboard
 
 	enum key_names {
 		//is this really needed
-		q, w, e, r, t, y, u, i, o, p, leftBracket, rightBracket,
-		a, s, d, f, g, h, j, k, l, semicolon, quote,
+		q, w, e, r, t, y, u, i, o, p, 
+		a, s, d, f, g, h, j, k, l, semicolon,
 		z, x, c, v, b, n, m, comma, period, slash,
 		numberOfKeys
 	};

@@ -99,7 +99,8 @@ bool loadMedia()
 
 	TaikoConverter* converter = new TaikoConverter(); 
 	//this is how I want the path stuff to look like...
-	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb, 3000);
+	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb, 2000);
+	//TODO: custom duration
 
 	bool loadEverythingElse = music->loadMusic()
 		&& bg->loadBackground(gRenderer, bg->alpha)
@@ -150,11 +151,11 @@ int main(int argc, char* args[])
 				playingSong = true;
 			}
 			else {
-				map->delayAllNotes(delay);
+				map->delayAllNotes(delay + 50); //TODO: custom delay?
 			}
 
 			timer->resetStartTime();
-			timer->resetTickTime(); //TODO: implement note offset...
+			timer->resetTickTime(); 
 			bool quit = false;
 			//While application is running
 			while (!quit)
