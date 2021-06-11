@@ -54,10 +54,10 @@ void Map::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, std::vector<i
 	}
 }
 
-void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, std::vector<int>& keyQueue) {
 	for (Note* note : notes) {
 		if (abs(note->getTimeFromHit(timer)) <= note->missWindow) {
-			renderType = note->handleInput(renderer, timer, e);
+			renderType = note->handleInput(renderer, timer, e, keyQueue);
 			hitNote();
 			renderFeedback(renderer, renderType);
 			break;

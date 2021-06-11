@@ -178,7 +178,7 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
 					{
 						kb->keyDown(gRenderer, e);
-						map->handleInput(gRenderer, timer, e);
+						map->handleInput(gRenderer, timer, e, keyQ->queue);
 					}
 					else if (e.type == SDL_KEYUP)
 					{

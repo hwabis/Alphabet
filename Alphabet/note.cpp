@@ -32,6 +32,7 @@ int Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, std::vector<i
 		if (!done && !missed && getTimeFromHit(timer) >= missWindow) {
 			//missed by delay
 			missed = true;
+			keyQueue.erase(keyQueue.begin());
 			return 0;
 		}
 
@@ -60,7 +61,7 @@ void Note::renderNote(SDL_Renderer* renderer) {
 	SDL_RenderCopy(renderer, keyTexture, NULL, pos);
 }*/
 
-int Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+int Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, std::vector<int>& keyQueue) {
 	int retval = -1;
 	if (!done && e.key.keysym.sym == key) {
 		float timeDiff = abs(getTimeFromHit(timer));
@@ -76,6 +77,7 @@ int Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 			//miss
 			retval = 0;
 		}
+		keyQueue.erase(keyQueue.begin());
 		free();
 		done = true;
 	}

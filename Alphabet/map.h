@@ -11,7 +11,7 @@ struct Map
 
 	bool loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overallDifficulty);
 	void tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, std::vector<int>& keyQueue);
-	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
+	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, std::vector<int>& keyQueue);
 
 	float getDelay();
 	void delayAllNotes(float delay);

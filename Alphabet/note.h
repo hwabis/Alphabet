@@ -34,7 +34,7 @@ struct Note
 	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key);
 	int tick(SDL_Renderer* renderer, Timer* timer, Keyboard* keyboard, std::vector<int>& keyQueue);
 	void renderNote(SDL_Renderer* renderer);
-	int handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
+	int handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, std::vector<int>& keyQueue);
 	void free();
 
 	float getTimeFromHit(Timer* timer);
