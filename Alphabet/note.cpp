@@ -48,7 +48,13 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, int key, Keyboard* kb
 
 void Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
 	if (done) {
-
+		if (feedbackTimer->getTime() < FEEDBACK_LENGTH) {
+			renderFeedback(renderer, feedbackType);
+		}
+		else if (!feedbackDone) {
+			freeFeedback();
+			feedbackDone = true;
+		}
 	}
 	else {
 		if (!shown && timer->getTime() >= hitTime - noteDuration) {
@@ -62,9 +68,9 @@ void Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
 
 			if (getTimeFromHit(timer) >= missWindow) {
 				//missed by delay
+				feedbackType = 0;
+				freeNote();
 				done = true;
-				renderFeedback(renderer, 0);
-				free();
 			}
 		}
 	}
@@ -84,21 +90,17 @@ void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 		float timeDiff = abs(getTimeFromHit(timer));
 		if (timeDiff <= perfWindow) {
 			//perfect
-			renderFeedback(renderer, 2);
-			printf("perf\n");
+			feedbackType = 2;
 		}
 		else if (timeDiff <= hitWindow) {
 			//ok
-			renderFeedback(renderer, 1);
-			printf("ok\n");
+			feedbackType = 1;
 		}
 		else {
 			//miss
-			renderFeedback(renderer, 0);
-			printf("miss\n");
+			feedbackType = 0;
 		}
-		free();
-		shown = false;
+		freeNote();
 		done = true;
 	}
 }
@@ -117,12 +119,16 @@ void Note::renderFeedback(SDL_Renderer* renderer, int type) {
 	}
 }
 
-void Note::free() {
+void Note::freeNote() {
+	feedbackTimer->resetStartTime();
 	SDL_DestroyTexture(noteTexture);
+	noteTexture = NULL;
+}
+
+void Note::freeFeedback() {
 	SDL_DestroyTexture(perfTexture);
 	SDL_DestroyTexture(okTexture);
 	SDL_DestroyTexture(missTexture);
-	noteTexture = NULL;
 	perfTexture = NULL;
 	okTexture = NULL;
 	missTexture = NULL;

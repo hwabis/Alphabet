@@ -32,7 +32,7 @@ struct Note
 	void tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb);
 	void renderNote(SDL_Renderer* renderer, Keyboard* kb);
 	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
-	void free();
+	void freeNote();
 
 	SDL_Rect* renderArea = new SDL_Rect{};
 	//i think now i get why you initialize stuff here... so your memory doesn't explode...
@@ -46,8 +46,12 @@ struct Note
 	const std::string PERFECT_PATH = "res/sprites/perfect.png";
 	const std::string OK_PATH = "res/sprites/ok.png";
 	const std::string MISS_PATH = "res/sprites/miss.png";
-	const float FEEDBACK_LENGTH = 300;
+	const float FEEDBACK_LENGTH = 200;
 	//2 = perfect, 1 = ok, 0 = miss
+	int feedbackType;
 	void renderFeedback(SDL_Renderer* renderer, int type);
-	SDL_Rect* feedbackArea = new SDL_Rect{100, 100, 100, 100}; //do this later
+	SDL_Rect* feedbackArea = new SDL_Rect{}; 
+	void freeFeedback();
+	Timer* feedbackTimer = new Timer();
+	bool feedbackDone = false;
 };
