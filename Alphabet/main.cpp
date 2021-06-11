@@ -104,7 +104,8 @@ bool loadMedia()
 
 	bool loadEverythingElse = music->loadMusic()
 		&& bg->loadBackground(gRenderer, bg->alpha)
-		&& map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"));
+		&& map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu")
+		&& keyQ->loadKeys(gRenderer));
 
 	return loadKeyboard && loadEverythingElse;
 }
@@ -151,7 +152,7 @@ int main(int argc, char* args[])
 				playingSong = true;
 			}
 			else {
-				map->delayAllNotes(delay + 50); //TODO: custom delay?
+				map->delayAllNotes(delay + 100); //TODO: custom delay?
 			}
 
 			timer->resetStartTime();
@@ -193,10 +194,7 @@ int main(int argc, char* args[])
 				map->tick(gRenderer, timer, kb, keyQ->queue);
 				timer->resetTickTime();
 
-				for (int i = 0; i < keyQ->queue.size(); ++i) {
-					printf("%i ", keyQ->queue[i]);
-				}
-				printf("\n");
+				keyQ->render(gRenderer, kb);
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);

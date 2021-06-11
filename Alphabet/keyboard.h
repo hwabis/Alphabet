@@ -8,6 +8,7 @@
 
 struct Keyboard
 {
+	//https://support.getfreewrite.com/article/27-freewrite-keyboard-layouts
 	const std::string KEYBOARD_PATH = "res/sprites/kb.png";
 	const std::string KEYDOWN_PATH = "res/sprites/keydown.png";
 	const char* PRESS_SOUND_PATH = "res/sounds/press.wav";
