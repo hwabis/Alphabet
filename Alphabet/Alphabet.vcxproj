@@ -33,6 +33,7 @@
     <ClInclude Include="music.h" />
     <ClInclude Include="note.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="taikoConverter.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="timer.h" />
   </ItemGroup>

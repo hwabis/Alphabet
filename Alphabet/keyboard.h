@@ -8,7 +8,7 @@
 
 struct Keyboard
 {
-	const std::string KEYBOARD_PATH = "res/sprites/kb.png";
+	const std::string KEYBOARD_PATH = "res/sprites/kb_with_keys.png";
 	const std::string KEYDOWN_PATH = "res/sprites/keydown.png";
 	const char* PRESS_SOUND_PATH = "res/sounds/press.wav";
 

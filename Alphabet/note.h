@@ -12,7 +12,7 @@ struct Note
 	const int NOTE_WIDTH = 18;
 	const float HIT_AT_X = 240;
 	const float SPAWN_LOC = 1366;
-	const float REACT_TIME = 400;
+	const float REACT_TIME = 500; //TODO: maybe turn this into the beat of the song?
 
 	bool shown = false;
 	bool done = false;

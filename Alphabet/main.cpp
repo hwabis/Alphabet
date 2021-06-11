@@ -11,6 +11,7 @@
 #include <note.h>
 #include <map.h>
 #include <timer.h>
+#include <taikoConverter.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -34,7 +35,7 @@ SDL_Renderer* gRenderer = NULL;
 Keyboard* kb = new Keyboard(); //has path but it's fine
 Music* music = new Music(); //has path but needs to be changeable
 Background* bg = new Background(); //has path but needs to be changeable
-Map* map = new Map(); //sprite paths are fine; map path is not...?
+Map* map = new Map(); //has path but it's fine
 Timer* timer = new Timer();
 
 bool init()
@@ -92,19 +93,17 @@ bool init()
 
 bool loadMedia()
 {
-	//make notes for map
-	Note* a = new Note();
-	Note* b = new Note();
-	Note* c = new Note();
-	a->loadNote(gRenderer, 984, 2000, SDLK_q);
-	b->loadNote(gRenderer, 1449, 2000, SDLK_q);
-	c->loadNote(gRenderer, 1681, 2000, SDLK_q);
-	std::vector<Note*> notes = { a,b,c };
+	bool loadKeyboard = kb->loadKeyboard(gRenderer);
 
-	return (kb->loadKeyboard(gRenderer) 
-		&& music->loadMusic() 
+	TaikoConverter* converter = new TaikoConverter(); 
+	//this is how I want the path stuff to look like...
+	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb);
+
+	bool loadEverythingElse = music->loadMusic()
 		&& bg->loadBackground(gRenderer, bg->alpha)
-		&& map->loadMap(gRenderer, notes));
+		&& map->loadMap(gRenderer, notes);
+
+	return loadKeyboard && loadEverythingElse;
 }
 
 void close()
