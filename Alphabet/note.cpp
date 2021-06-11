@@ -19,9 +19,10 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int k
 	return success;
 }
 
-int Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
+int Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, std::vector<int>& keyQueue) {
 	if (!shown && !done && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
 		shown = true;
+		keyQueue.push_back(key);
 	}
 	if (shown) {
 		xPos -= SPAWN_LOC*timer->getTimeStep() / noteDuration;

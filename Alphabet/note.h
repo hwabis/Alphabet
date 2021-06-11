@@ -5,6 +5,7 @@
 #include <texture.h>
 #include <timer.h>
 #include <keyboard.h>
+#include <vector>
 struct Note
 {
 	std::string NOTE_PATH = "res/sprites/bar.png";
@@ -31,7 +32,7 @@ struct Note
 
 	//int return values are for Map to use
 	bool loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key);
-	int tick(SDL_Renderer* renderer, Timer* timer, Keyboard* keyboard);
+	int tick(SDL_Renderer* renderer, Timer* timer, Keyboard* keyboard, std::vector<int>& keyQueue);
 	void renderNote(SDL_Renderer* renderer);
 	int handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
 	void free();
@@ -41,4 +42,6 @@ struct Note
 	float xPos;
 	SDL_Rect* pos = new SDL_Rect{ (int)xPos, 50, NOTE_WIDTH, NOTE_HEIGHT };
 
+	//for rendering keyboard notes
+	static std::vector<int> keyQueue;
 };

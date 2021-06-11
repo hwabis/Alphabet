@@ -12,6 +12,7 @@
 #include <map.h>
 #include <timer.h>
 #include <taikoConverter.h>
+#include <keyQueue.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -37,6 +38,7 @@ Music* music = new Music(); //has path but needs to be changeable
 Background* bg = new Background(); //has path but needs to be changeable
 Map* map = new Map(); //has path but it's fine
 Timer* timer = new Timer();
+KeyQueue* keyQ = new KeyQueue();
 
 bool init()
 {
@@ -97,7 +99,7 @@ bool loadMedia()
 
 	TaikoConverter* converter = new TaikoConverter(); 
 	//this is how I want the path stuff to look like...
-	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb);
+	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb, 3000);
 
 	bool loadEverythingElse = music->loadMusic()
 		&& bg->loadBackground(gRenderer, bg->alpha)
@@ -187,8 +189,13 @@ int main(int argc, char* args[])
 				bg->render(gRenderer);
 				kb->render(gRenderer);
 
-				map->tick(gRenderer, timer, kb);
+				map->tick(gRenderer, timer, kb, keyQ->queue);
 				timer->resetTickTime();
+
+				for (int i = 0; i < keyQ->queue.size(); ++i) {
+					printf("%i ", keyQ->queue[i]);
+				}
+				printf("\n");
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);

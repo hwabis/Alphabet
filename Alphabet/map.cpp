@@ -35,9 +35,9 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 	return success;
 }
 
-void Map::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
+void Map::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, std::vector<int>& keyQueue) {
 	for (Note* note : notes) {
-		if (note->tick(renderer, timer, kb) == 0) {
+		if (note->tick(renderer, timer, kb, keyQueue) == 0) {
 			//missed by delay
 			renderType = 0;
 			hitNote();

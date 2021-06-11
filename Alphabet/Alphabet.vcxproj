@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="background.cpp" />
     <ClCompile Include="keyboard.cpp" />
+    <ClCompile Include="keyQueue.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="music.cpp" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="keyQueue.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="music.h" />
     <ClInclude Include="note.h" />
