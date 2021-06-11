@@ -32,10 +32,10 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-Keyboard* kb = new Keyboard(); //has path but it's fine
-Music* music = new Music(); //has path but needs to be changeable
-Background* bg = new Background(); //has path but needs to be changeable
-Map* map = new Map(); //has path but it's fine
+Keyboard* kb = new Keyboard(); 
+Music* music = new Music(); 
+Background* bg = new Background(); 
+Map* map = new Map(); 
 Timer* timer = new Timer();
 
 bool init()
@@ -98,8 +98,8 @@ bool loadMedia()
 	TaikoConverter* converter = new TaikoConverter(); 
 	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb);
 
-	music->loadMusic();
-	bg->loadBackground(gRenderer, bg->alpha);
+	music->loadMusic("res/songs/Nagi -nagi-.mp3");
+	bg->loadBackground(gRenderer, "res/songs/nagi osu.jpg", 50);
 	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"), kb);
 
 	return true; //whatever.. this is too un-useful

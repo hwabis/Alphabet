@@ -5,11 +5,9 @@
 
 struct Music
 {
-	const char* MUSIC_PATH = "res/songs/Nagi -nagi-.mp3";
-
 	Mix_Music* song = NULL;
 
-	bool loadMusic();
+	bool loadMusic(std::string path);
 	void playSong();
 	void free();
 };

@@ -1,9 +1,9 @@
 #include "music.h"
 
-bool Music::loadMusic() {
+bool Music::loadMusic(std::string path) {
     bool success = true;
 
-    song = Mix_LoadMUS(MUSIC_PATH);
+    song = Mix_LoadMUS(path.c_str());
     if (song == NULL)
     {
         printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());

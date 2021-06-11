@@ -1,10 +1,10 @@
 #include "background.h"
 
-bool Background::loadBackground(SDL_Renderer* renderer, Uint8 alpha) {
+bool Background::loadBackground(SDL_Renderer* renderer, std::string path, Uint8 alpha) {
 
 	bool success = true;
 
-	bgTexture = Texture::loadTexture(BG_PATH, renderer);
+	bgTexture = Texture::loadTexture(path.c_str(), renderer);
 
 	SDL_SetTextureBlendMode(bgTexture, SDL_BLENDMODE_BLEND);
 	SDL_SetTextureAlphaMod(bgTexture, alpha);
