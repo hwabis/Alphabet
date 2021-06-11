@@ -94,6 +94,16 @@ void Keyboard::keyUp(SDL_Renderer* renderer, SDL_Event e) {
 	}
 }
 
+int Keyboard::getKeyIndex(int key) {
+	int index = 0;
+	for (int i = 0; i < numberOfKeys; ++i) {
+		if (validKeys[i] == key) {
+			index = i;
+		}
+	}
+	return index;
+}
+
 void Keyboard::render(SDL_Renderer* renderer) {
 	for (int i = 0; i < numberOfKeys; ++i) {
 		if (pressedKeys[i]) {

@@ -37,4 +37,6 @@ struct Keyboard
 	void keyUp(SDL_Renderer* renderer, SDL_Event e);
 	void render(SDL_Renderer* renderer);
 	void free();
+
+	int getKeyIndex(int key);
 };

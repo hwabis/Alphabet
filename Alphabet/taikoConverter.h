@@ -6,7 +6,7 @@
 #include <fStream>
 struct TaikoConverter
 {
-	std::vector<Note*> makeNotes(SDL_Renderer* renderer, std::string path, Keyboard* kb, float duration) {
+	std::vector<Note*> makeNotes(SDL_Renderer* renderer, std::string path, Keyboard* kb) {
 		std::vector<Note*> notes = {};
 
 		std::ifstream file(path);
@@ -39,7 +39,7 @@ struct TaikoConverter
 					}
 					Note* note = new Note();
 					// I guess the duration will be determined by user...
-					note->loadNote(renderer, std::stof(hitTime), duration, kb->validKeys[rand() % kb->numberOfKeys]);
+					note->loadNote(renderer, std::stof(hitTime), kb->validKeys[rand() % kb->numberOfKeys], kb);
 					notes.push_back(note);
 				}
 			}

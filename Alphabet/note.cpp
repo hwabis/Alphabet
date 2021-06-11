@@ -1,11 +1,20 @@
 #include "Note.h"
 
-bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int key) {
+bool Note::loadNote(SDL_Renderer* renderer, float hitTime, int key, Keyboard* kb) {
 
-	this->xPos = SPAWN_LOC;
 	this->hitTime = hitTime;
-	this->noteDuration = duration;
 	this->key = key;
+	this->currentDim = 0;
+
+	//TODO: change to scale with Map AR??
+	this->noteDuration = 800;
+
+	index = kb->getKeyIndex(key);
+	feedbackArea->x = kb->key_positions[index].first;
+	feedbackArea->y = kb->key_positions[index].second;
+	//hard coded lol
+	feedbackArea->h = 35; 
+	feedbackArea->w = 104;
 
 	bool success = true;
 
@@ -15,78 +24,108 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, float duration, int k
 		printf("Failed to load note image!\n");
 		success = false;
 	}
+	perfTexture = Texture::loadTexture(PERFECT_PATH, renderer);
+	if (perfTexture == NULL)
+	{
+		printf("Failed to load perfTexture!\n");
+		success = false;
+	}
+	okTexture = Texture::loadTexture(OK_PATH, renderer);
+	if (okTexture == NULL)
+	{
+		printf("Failed to load okTexture!\n");
+		success = false;
+	}
+	missTexture = Texture::loadTexture(MISS_PATH, renderer);
+	if (missTexture == NULL)
+	{
+		printf("Failed to load missTexture!\n");
+		success = false;
+	} //lol i keep copy pasting this...
 
 	return success;
 }
 
-int Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, std::vector<int>& keyQueue) {
-	if (!shown && !done && timer->getTime() >= hitTime - (1 - HIT_AT_X / SPAWN_LOC) * noteDuration) {
-		shown = true;
-		keyQueue.push_back(key);
-	}
-	if (shown) {
-		xPos -= SPAWN_LOC*timer->getTimeStep() / noteDuration;
-		pos->x = xPos;
-		renderNote(renderer);
+void Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
+	if (done) {
 
-		if (!done && !missed && getTimeFromHit(timer) >= missWindow) {
-			//missed by delay
-			missed = true;
-			keyQueue.erase(keyQueue.begin());
-			return 0;
+	}
+	else {
+		if (!shown && timer->getTime() >= hitTime - noteDuration) {
+			shown = true;
 		}
+		if (shown) {
+			if (currentDim < RECT_MAX_DIM) {
+				currentDim += timer->getTimeStep() * RECT_MAX_DIM / noteDuration;
+			}
+			renderNote(renderer, kb);
 
-		if (xPos + NOTE_WIDTH <= 0) {
-			//reached end of screen
-			free();
+			if (getTimeFromHit(timer) >= missWindow) {
+				//missed by delay
+				done = true;
+				renderFeedback(renderer, 0);
+				free();
+			}
 		}
 	}
-	return -1;
 }
 
-void Note::renderNote(SDL_Renderer* renderer) {
-	SDL_RenderCopy(renderer, noteTexture, NULL, pos);
+void Note::renderNote(SDL_Renderer* renderer, Keyboard* kb) {
+	index = kb->getKeyIndex(key);
+	renderArea->x = kb->key_positions[index].first + RECT_MAX_DIM / 2 - currentDim / 2;
+	renderArea->y = kb->key_positions[index].second + RECT_MAX_DIM / 2 - currentDim / 2;
+	renderArea->h = currentDim;
+	renderArea->w = currentDim;
+	SDL_RenderCopy(renderer, noteTexture, NULL, renderArea);
 }
 
-/*void Note::renderKey(SDL_Renderer* renderer, int key, Keyboard* kb) {
-	int index = 0;
-	for (int i = 0; i < kb->numberOfKeys; ++i) {
-		if (kb->validKeys[i] == key) {
-			index = i;
-			break;
-		}
-	}
-	//UHH these 104's should come from Keyboard::KEYDOWN_DIM
-	SDL_Rect* pos = new SDL_Rect{ kb->key_positions[index].first, kb->key_positions[index].second, 104, 104 }; 
-	SDL_RenderCopy(renderer, keyTexture, NULL, pos);
-}*/
-
-int Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, std::vector<int>& keyQueue) {
-	int retval = -1;
+void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 	if (!done && e.key.keysym.sym == key) {
 		float timeDiff = abs(getTimeFromHit(timer));
 		if (timeDiff <= perfWindow) {
 			//perfect
-			retval = 2;
+			renderFeedback(renderer, 2);
+			printf("perf\n");
 		}
 		else if (timeDiff <= hitWindow) {
 			//ok
-			retval = 1;
+			renderFeedback(renderer, 1);
+			printf("ok\n");
 		}
 		else {
 			//miss
-			retval = 0;
+			renderFeedback(renderer, 0);
+			printf("miss\n");
 		}
-		keyQueue.erase(keyQueue.begin());
 		free();
+		shown = false;
 		done = true;
 	}
-	return retval;
+}
+
+void Note::renderFeedback(SDL_Renderer* renderer, int type) {
+	switch (type) {
+	case 2:
+		SDL_RenderCopy(renderer, perfTexture, NULL, feedbackArea);
+		break;
+	case 1:
+		SDL_RenderCopy(renderer, okTexture, NULL, feedbackArea);
+		break;
+	case 0:
+		SDL_RenderCopy(renderer, missTexture, NULL, feedbackArea);
+		break;
+	}
 }
 
 void Note::free() {
 	SDL_DestroyTexture(noteTexture);
+	SDL_DestroyTexture(perfTexture);
+	SDL_DestroyTexture(okTexture);
+	SDL_DestroyTexture(missTexture);
 	noteTexture = NULL;
+	perfTexture = NULL;
+	okTexture = NULL;
+	missTexture = NULL;
 }
 
 float Note::getTimeFromHit(Timer* timer) {

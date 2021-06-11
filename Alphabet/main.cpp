@@ -12,7 +12,6 @@
 #include <map.h>
 #include <timer.h>
 #include <taikoConverter.h>
-#include <keyQueue.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -38,7 +37,6 @@ Music* music = new Music(); //has path but needs to be changeable
 Background* bg = new Background(); //has path but needs to be changeable
 Map* map = new Map(); //has path but it's fine
 Timer* timer = new Timer();
-KeyQueue* keyQ = new KeyQueue();
 
 bool init()
 {
@@ -95,19 +93,16 @@ bool init()
 
 bool loadMedia()
 {
-	bool loadKeyboard = kb->loadKeyboard(gRenderer);
+	kb->loadKeyboard(gRenderer);
 
 	TaikoConverter* converter = new TaikoConverter(); 
-	//this is how I want the path stuff to look like...
-	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb, 2000);
-	//TODO: custom duration
+	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb);
 
-	bool loadEverythingElse = music->loadMusic()
-		&& bg->loadBackground(gRenderer, bg->alpha)
-		&& map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu")
-		&& keyQ->loadKeys(gRenderer));
+	music->loadMusic();
+	bg->loadBackground(gRenderer, bg->alpha);
+	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"), kb);
 
-	return loadKeyboard && loadEverythingElse;
+	return true; //whatever.. this is too un-useful
 }
 
 void close()
@@ -180,7 +175,7 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
 					{
 						kb->keyDown(gRenderer, e);
-						map->handleInput(gRenderer, timer, e, keyQ->queue);
+						map->handleInput(gRenderer, timer, e);
 					}
 					else if (e.type == SDL_KEYUP)
 					{
@@ -191,10 +186,8 @@ int main(int argc, char* args[])
 				bg->render(gRenderer);
 				kb->render(gRenderer);
 
-				map->tick(gRenderer, timer, kb, keyQ->queue);
+				map->tick(gRenderer, timer, kb);
 				timer->resetTickTime();
-
-				keyQ->render(gRenderer, kb);
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);
