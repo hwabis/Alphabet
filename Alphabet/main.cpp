@@ -101,7 +101,7 @@ bool loadMedia()
 
 	bool loadEverythingElse = music->loadMusic()
 		&& bg->loadBackground(gRenderer, bg->alpha)
-		&& map->loadMap(gRenderer, notes);
+		&& map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"));
 
 	return loadKeyboard && loadEverythingElse;
 }

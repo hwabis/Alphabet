@@ -12,7 +12,6 @@ struct Note
 	const int NOTE_WIDTH = 18;
 	const float HIT_AT_X = 240;
 	const float SPAWN_LOC = 1366;
-	const float REACT_TIME = 500; //TODO: maybe turn this into the beat of the song?
 
 	bool shown = false;
 	bool done = false;
@@ -42,7 +41,4 @@ struct Note
 	float xPos;
 	SDL_Rect* pos = new SDL_Rect{ (int)xPos, 50, NOTE_WIDTH, NOTE_HEIGHT };
 
-	std::string KEY_PATH = "res/sprites/keydownOrange.png";
-	SDL_Texture* keyTexture = NULL;
-	void renderKey(SDL_Renderer* renderer, int key, Keyboard* kb);
 };

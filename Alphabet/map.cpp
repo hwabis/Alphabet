@@ -1,13 +1,13 @@
 #include "Map.h"
 
-bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes) {
+bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overallDifficulty) {
 	this->notes = notes;
 	for (Note* note : notes) {
 		note->loadNote(renderer, note->hitTime, note->noteDuration, note->key);
-		// TODO: convert all these from OD instead of hard value
-		note->missWindow = 200; 
-		note->hitWindow = 150;
-		note->perfWindow = 50;
+		//windows from https://osu.ppy.sh/wiki/en/Beatmapping/Overall_difficulty
+		note->missWindow = 400 - 20*overallDifficulty; 
+		note->hitWindow = 280 - 16*overallDifficulty;
+		note->perfWindow = 160 - 12*overallDifficulty;
 	}
 
 	feedbackTimer->resetStartTime();

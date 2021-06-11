@@ -48,4 +48,24 @@ struct TaikoConverter
 		
 		return notes;
 	}
+
+	float getOverallDifficulty(std::string path) {
+		std::string OD = "";
+
+		std::ifstream file(path);
+		if (file.is_open()) {
+
+			std::string line;
+			while (std::getline(file, line)) {
+				if (line.substr(0,18) == "OverallDifficulty:") {
+					//line[18] to the end is the OD
+					for (int i = 18; i < line.length(); ++i) {
+						OD += line[i];
+					}
+				}
+			}
+			file.close();
+		}
+		return std::stof(OD);
+	}
 };
