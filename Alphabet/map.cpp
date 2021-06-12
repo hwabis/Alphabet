@@ -14,7 +14,6 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 		//setting it to the (taiko) map's OD and HP can be problematic on certain maps...
 		//so we'll just let the user pick their own AR. 
 		//reference: https://osu.ppy.sh/wiki/en/Beatmapping/Approach_rate
-		approachRate = 4;
 		if (approachRate < 5) {
 			note->noteDuration = 1200 + 600 * (5 - approachRate) / 5;
 		}

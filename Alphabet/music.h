@@ -5,9 +5,10 @@
 
 struct Music
 {
-	Mix_Music* song = NULL;
+	Mix_Chunk* song = NULL;
 
 	bool loadMusic(std::string path);
 	void playSong();
+	bool isPlaying();
 	void free();
 };

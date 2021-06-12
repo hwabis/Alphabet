@@ -3,7 +3,7 @@
 bool Music::loadMusic(std::string path) {
     bool success = true;
 
-    song = Mix_LoadMUS(path.c_str());
+    song = Mix_LoadWAV(path.c_str());
     if (song == NULL)
     {
         printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
@@ -14,10 +14,14 @@ bool Music::loadMusic(std::string path) {
 }
 
 void Music::playSong() {
-    Mix_PlayMusic(song, -1);
+    Mix_PlayChannel(-1, song, 0);
+}
+
+bool Music::isPlaying() {
+    return Mix_Playing(-1);
 }
 
 void Music::free() {
-    Mix_FreeMusic(song);
+    Mix_FreeChunk(song);
     song = NULL;
 }

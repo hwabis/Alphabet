@@ -193,6 +193,12 @@ int main(int argc, char* args[])
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);
+
+				if (playingSong && !music->isPlaying()) {
+					//TODO: results screen
+					music->free();
+					break;
+				}
 			}
 		}
 	}
