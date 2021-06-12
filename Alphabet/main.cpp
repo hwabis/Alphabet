@@ -100,7 +100,9 @@ bool loadMedia()
 
 	music->loadMusic("res/songs/Nagi -nagi-.mp3");
 	bg->loadBackground(gRenderer, "res/songs/nagi osu.jpg", 50);
-	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"), kb);
+	//AR 4 is a good number for beginners I think.
+	//TODO: let user input AR, map path, bg path, music path
+	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"), 4, kb);
 
 	return true; //whatever.. this is too un-useful
 }

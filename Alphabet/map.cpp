@@ -1,6 +1,6 @@
 #include "Map.h"
 
-bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overallDifficulty, Keyboard* kb) {
+bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overallDifficulty, float approachRate, Keyboard* kb) {
 	this->notes = notes;
 	for (Note* note : notes) {
 		note->loadNote(renderer, note->hitTime, note->key, kb);
@@ -12,7 +12,7 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 
 		//there's no actual AR in taiko, so need to come up with own formula.
 		//setting it to the (taiko) map's OD and HP can be problematic on certain maps...
-		//so we'll just let the user pick their own AR. 4 is a good number for beginners I think.
+		//so we'll just let the user pick their own AR. 
 		//reference: https://osu.ppy.sh/wiki/en/Beatmapping/Approach_rate
 		approachRate = 4;
 		if (approachRate < 5) {
