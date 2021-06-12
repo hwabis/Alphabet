@@ -5,9 +5,10 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 	for (Note* note : notes) {
 		note->loadNote(renderer, note->hitTime, note->key, kb);
 		//windows from https://osu.ppy.sh/wiki/en/Beatmapping/Overall_difficulty
-		note->missWindow = 400 - 20*overallDifficulty; 
-		note->hitWindow = 280 - 16*overallDifficulty;
-		note->perfWindow = 160 - 12*overallDifficulty;
+		//divide by two because we check with time differences, not whether it's in the window
+		note->missWindow = (400 - 20*overallDifficulty) / 2; //OD5: 300
+		note->hitWindow = (280 - 16*overallDifficulty) / 2; //OD5: 200
+		note->perfWindow = (160 - 12*overallDifficulty) / 2; //OD5: 100
 	}
 
 	return true; //meh
@@ -21,7 +22,7 @@ void Map::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
 
 void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 	for (Note* note : notes) {
-		if (abs(note->getTimeFromHit(timer)) <= note->missWindow && !note->done) {
+		if (note->getTimeFromHit(timer) >= -note->missWindow && !note->done) {
 			note->handleInput(renderer, timer, e);
 			break;
 		}

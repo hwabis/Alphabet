@@ -96,9 +96,13 @@ void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 			//ok
 			feedbackType = 1;
 		}
-		else {
+		else if (timeDiff <= missWindow) {
 			//miss
 			feedbackType = 0;
+		}
+		else {
+			feedbackType = -1;
+			printf("pls report this as a bug xD\n");
 		}
 		freeNote();
 		done = true;

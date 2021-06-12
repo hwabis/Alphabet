@@ -147,7 +147,8 @@ int main(int argc, char* args[])
 				playingSong = true;
 			}
 			else {
-				map->delayAllNotes(delay + 100); //TODO: custom delay?
+				printf("delayed");
+				map->delayAllNotes(delay);
 			}
 
 			timer->resetStartTime();
