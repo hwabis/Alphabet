@@ -6,9 +6,6 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, int key, Keyboard* kb
 	this->key = key;
 	this->currentDim = 0;
 
-	//TODO: change to scale with Map AR??
-	this->noteDuration = 800;
-
 	index = kb->getKeyIndex(key);
 	feedbackArea->x = kb->key_positions[index].first;
 	feedbackArea->y = kb->key_positions[index].second;
@@ -96,13 +93,9 @@ void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 			//ok
 			feedbackType = 1;
 		}
-		else if (timeDiff <= missWindow) {
+		else {
 			//miss
 			feedbackType = 0;
-		}
-		else {
-			feedbackType = -1;
-			printf("pls report this as a bug xD\n");
 		}
 		freeNote();
 		done = true;

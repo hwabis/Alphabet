@@ -18,12 +18,13 @@ struct Note
 
 	//everything is in milliseconds
 	float hitTime;
-	//windows defined by Map
+	//windows and noteDuration defined by Map
+	//(OD and AR respectively)
 	float hitWindow;
 	float perfWindow;
 	float missWindow;
-
 	float noteDuration; 
+
 	int key; 
 
 	SDL_Texture* noteTexture = NULL;

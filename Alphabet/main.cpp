@@ -147,7 +147,6 @@ int main(int argc, char* args[])
 				playingSong = true;
 			}
 			else {
-				printf("delayed");
 				map->delayAllNotes(delay);
 			}
 

@@ -9,6 +9,21 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 		note->missWindow = (400 - 20*overallDifficulty) / 2; //OD5: 300
 		note->hitWindow = (280 - 16*overallDifficulty) / 2; //OD5: 200
 		note->perfWindow = (160 - 12*overallDifficulty) / 2; //OD5: 100
+
+		//there's no actual AR in taiko, so need to come up with own formula.
+		//setting it to the (taiko) map's OD and HP can be problematic on certain maps...
+		//so we'll just let the user pick their own AR. 4 is a good number for beginners I think.
+		//reference: https://osu.ppy.sh/wiki/en/Beatmapping/Approach_rate
+		approachRate = 4;
+		if (approachRate < 5) {
+			note->noteDuration = 1200 + 600 * (5 - approachRate) / 5;
+		}
+		else if (approachRate == 5) {
+			note->noteDuration = 1200;
+		}
+		else {
+			note->noteDuration = 1200 - 750 * (approachRate - 5) / 5;
+		}
 	}
 
 	return true; //meh

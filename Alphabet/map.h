@@ -7,7 +7,7 @@
 struct Map
 {
 	std::vector<Note*> notes;
-	int approachRate;
+	float approachRate;
 
 	bool loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overallDifficulty, Keyboard* kb);
 	void tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb);
