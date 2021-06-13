@@ -42,7 +42,8 @@ struct TaikoConverter
 						}
 					}
 					Note* note = new Note();
-					// I guess the duration will be determined by user...
+					//is there a better way to determine notes...?
+					srand(std::stoi(hitTime));
 					note->loadNote(renderer, std::stof(hitTime), kb->validKeys[rand() % kb->numberOfKeys], kb);
 					notes.push_back(note);
 				}
