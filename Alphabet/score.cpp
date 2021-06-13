@@ -28,7 +28,7 @@ int Score::getCount(int type) {
 		return okCount;
 	case 0:
 		return missCount;
-	case -1:
+	default:
 		printf("Score::getCount invalid type\n");
 		return -1;
 	}

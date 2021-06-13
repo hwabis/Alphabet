@@ -98,13 +98,13 @@ bool loadMedia()
 	kb->loadKeyboard(gRenderer);
 
 	TaikoConverter* converter = new TaikoConverter(); 
-	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/Ray - Nagi (mingmichael) [Futsuu].osu", kb);
+	std::vector<Note*> notes = converter->makeNotes(gRenderer, "res/songs/nagi.osu", kb);
 
-	music->loadMusic("res/songs/Nagi -nagi-.mp3");
-	bg->loadBackground(gRenderer, "res/songs/nagi osu.jpg", 50);
+	music->loadMusic("res/songs/nagi.mp3");
+	bg->loadBackground(gRenderer, "res/songs/nagi.jpg", 50);
 	//any AR from 1 to 4 is good for beginners.
 	//TODO: let user input AR, map path, bg path, music path
-	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"), 4, kb);
+	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/nagi.osu"), 4, kb);
 
 	//where's score? score is the only class that I actually wrote properly.. a constructor with parameters...
 	//so it's already been "loaded" when it was initialized. lol.
@@ -130,6 +130,8 @@ void close()
 
 int main(int argc, char* args[])
 {
+	//example map source: https://osu.ppy.sh/beatmapsets/146008#taiko/364949
+
 	//Start up SDL and create window
 	if (!init())
 	{

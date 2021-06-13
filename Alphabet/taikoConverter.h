@@ -4,6 +4,7 @@
 #include <vector>
 #include <note.h>
 #include <fStream>
+#
 struct TaikoConverter
 {
 	//why not make a standard converter?
@@ -13,7 +14,10 @@ struct TaikoConverter
 	std::vector<Note*> makeNotes(SDL_Renderer* renderer, std::string path, Keyboard* kb) {
 		std::vector<Note*> notes = {};
 
+		//check if valid taiko map
+		bool foundTaiko = false;
 		std::ifstream file(path);
+
 		if (file.is_open()) {
 
 			bool findHitObjects = false;
@@ -22,6 +26,9 @@ struct TaikoConverter
 			int commaCount;
 			std::string hitTime = "";
 			while (std::getline(file, line)) {
+				if (line == "Mode: 1") {
+					foundTaiko = true;
+				}
 				if (!findHitObjects) {
 					if (line == "[HitObjects]") {
 						findHitObjects = true;
@@ -51,6 +58,10 @@ struct TaikoConverter
 			file.close();
 		}
 		
+		if (!foundTaiko) {
+			printf("Warning: not a valid taiko map!\n");
+		}
+
 		return notes;
 	}
 
