@@ -43,7 +43,7 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, int key, Keyboard* kb
 	return success;
 }
 
-void Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
+void Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, Score* score) {
 	if (done) {
 		if (feedbackTimer->getTime() < FEEDBACK_LENGTH) {
 			renderFeedback(renderer, feedbackType);
@@ -68,6 +68,7 @@ void Note::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
 				feedbackType = 0;
 				freeNote();
 				done = true;
+				score->addCount(0);
 			}
 		}
 	}
@@ -82,7 +83,7 @@ void Note::renderNote(SDL_Renderer* renderer, Keyboard* kb) {
 	SDL_RenderCopy(renderer, noteTexture, NULL, renderArea);
 }
 
-void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, Score* score) {
 	if (!done && e.key.keysym.sym == key) {
 		float timeDiff = abs(getTimeFromHit(timer));
 		if (timeDiff <= perfWindow) {
@@ -99,6 +100,7 @@ void Note::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
 		}
 		freeNote();
 		done = true;
+		score->addCount(feedbackType);
 	}
 }
 

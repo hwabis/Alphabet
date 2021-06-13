@@ -6,6 +6,7 @@
 #include <timer.h>
 #include <keyboard.h>
 #include <vector>
+#include <score.h>
 struct Note
 {
 	std::string NOTE_PATH = "res/sprites/approachRect.png";
@@ -30,9 +31,9 @@ struct Note
 	SDL_Texture* noteTexture = NULL;
 
 	bool loadNote(SDL_Renderer* renderer, float hitTime, int key, Keyboard* kb);
-	void tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb);
+	void tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, Score* score);
 	void renderNote(SDL_Renderer* renderer, Keyboard* kb);
-	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e);
+	void handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, Score* score);
 	void freeNote();
 
 	SDL_Rect* renderArea = new SDL_Rect{};

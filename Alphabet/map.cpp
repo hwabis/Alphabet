@@ -28,16 +28,16 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 	return true; //meh
 }
 
-void Map::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb) {
+void Map::tick(SDL_Renderer* renderer, Timer* timer, Keyboard* kb, Score* score) {
 	for (Note* note : notes) {
-		note->tick(renderer, timer, kb);
+		note->tick(renderer, timer, kb, score);
 	}
 }
 
-void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e) {
+void Map::handleInput(SDL_Renderer* renderer, Timer* timer, SDL_Event e, Score* score) {
 	for (Note* note : notes) {
 		if (note->getTimeFromHit(timer) >= -note->missWindow && !note->done) {
-			note->handleInput(renderer, timer, e);
+			note->handleInput(renderer, timer, e, score);
 			break;
 		}
 	}

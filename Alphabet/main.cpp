@@ -12,6 +12,7 @@
 #include <map.h>
 #include <timer.h>
 #include <taikoConverter.h>
+#include <score.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1366;
@@ -37,6 +38,7 @@ Music* music = new Music();
 Background* bg = new Background(); 
 Map* map = new Map(); 
 Timer* timer = new Timer();
+Score* score = new Score();
 
 bool init()
 {
@@ -103,6 +105,9 @@ bool loadMedia()
 	//any AR from 1 to 4 is good for beginners.
 	//TODO: let user input AR, map path, bg path, music path
 	map->loadMap(gRenderer, notes, converter->getOverallDifficulty("res/songs/Ray - Nagi (mingmichael) [Futsuu].osu"), 4, kb);
+
+	//where's score? score is the only class that I actually wrote properly.. a constructor with parameters...
+	//so it's already been "loaded" when it was initialized. lol.
 
 	return true; //whatever.. this is too un-useful
 }
@@ -177,7 +182,7 @@ int main(int argc, char* args[])
 					else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))
 					{
 						kb->keyDown(gRenderer, e);
-						map->handleInput(gRenderer, timer, e);
+						map->handleInput(gRenderer, timer, e, score);
 					}
 					else if (e.type == SDL_KEYUP)
 					{
@@ -188,15 +193,17 @@ int main(int argc, char* args[])
 				bg->render(gRenderer);
 				kb->render(gRenderer);
 
-				map->tick(gRenderer, timer, kb);
+				map->tick(gRenderer, timer, kb, score);
 				timer->resetTickTime();
 
 				//Update screen
 				SDL_RenderPresent(gRenderer);
 
 				if (playingSong && !music->isPlaying()) {
-					//TODO: results screen
 					music->free();
+					printf("RESULTS\n----------\nAccuracy: %.2f%%\nPerfect: %i\nOK: %i\nMiss: %i\n", 
+						score->getAccuracy(), score->getCount(2), score->getCount(1), score->getCount(0));
+					score->reset();
 					break;
 				}
 			}

@@ -25,6 +25,7 @@
     <ClCompile Include="map.cpp" />
     <ClCompile Include="music.cpp" />
     <ClCompile Include="note.cpp" />
+    <ClCompile Include="score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="music.h" />
     <ClInclude Include="note.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="taikoConverter.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="timer.h" />
