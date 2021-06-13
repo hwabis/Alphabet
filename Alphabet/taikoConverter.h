@@ -51,7 +51,9 @@ struct TaikoConverter
 					Note* note = new Note();
 					//is there a better way to determine notes...?
 					srand(std::stoi(hitTime));
-					note->loadNote(renderer, std::stof(hitTime), kb->validKeys[rand() % kb->numberOfKeys], kb);
+					if (hitTime != "") {
+						note->loadNote(renderer, std::stof(hitTime), kb->validKeys[rand() % kb->numberOfKeys], kb);
+					}
 					notes.push_back(note);
 				}
 			}
@@ -59,7 +61,7 @@ struct TaikoConverter
 		}
 		
 		if (!foundTaiko) {
-			printf("Warning: not a valid taiko map!\n");
+			printf("Not a valid taiko map! Notes may not be generated correctly. Double-check the path.\n");
 		}
 
 		return notes;
@@ -67,6 +69,8 @@ struct TaikoConverter
 
 	float getOverallDifficulty(std::string path) {
 		std::string OD = "";
+
+		bool odFound = false;
 
 		std::ifstream file(path);
 		if (file.is_open()) {
@@ -76,12 +80,18 @@ struct TaikoConverter
 				if (line.substr(0,18) == "OverallDifficulty:") {
 					//line[18] to the end is the OD
 					for (int i = 18; i < line.length(); ++i) {
+						odFound = true;
 						OD += line[i];
 					}
 				}
 			}
 			file.close();
 		}
-		return std::stof(OD);
+		if (!odFound) {
+			return 0;
+		}
+		else {
+			return std::stof(OD);
+		}
 	}
 };

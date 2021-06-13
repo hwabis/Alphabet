@@ -11,7 +11,7 @@ bool Background::loadBackground(SDL_Renderer* renderer, std::string path, Uint8 
 
 	if (bgTexture == NULL)
 	{
-		printf("Failed to load background image!\n");
+		printf("Failed to load background image! Double-check the path.\n");
 		success = false;
 	}
 

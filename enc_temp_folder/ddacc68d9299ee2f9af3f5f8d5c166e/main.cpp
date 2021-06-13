@@ -178,7 +178,7 @@ int main(int argc, char* args[])
 			}
 			else
 			{
-				printf("Playing... (close the game window to cancel the current session)\n\n");
+				printf("Playing... (close the window to cancel current session)\n\n");
 				SDL_RaiseWindow(gWindow);
 
 				//Event handler
@@ -215,7 +215,7 @@ int main(int argc, char* args[])
 						if (e.type == SDL_QUIT)
 						{
 							quit = true;
-							printf("Current session cancelled.\n\n");
+							printf("Current session cancelled.\n");
 						}
 						// when pressed down
 						else if (e.type == SDL_KEYDOWN && kb->isValidKey(e.key.keysym.sym))

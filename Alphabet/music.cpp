@@ -6,7 +6,7 @@ bool Music::loadMusic(std::string path) {
     song = Mix_LoadWAV(path.c_str());
     if (song == NULL)
     {
-        printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+        printf("Failed to load song! Double-check the path. (Game window will close.)\n");
         success = false;
     }
 
