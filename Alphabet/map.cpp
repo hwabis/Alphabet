@@ -15,13 +15,13 @@ bool Map::loadMap(SDL_Renderer* renderer, std::vector<Note*> notes, float overal
 		//so we'll just let the user pick their own AR. 
 		//reference: https://osu.ppy.sh/wiki/en/Beatmapping/Approach_rate
 		if (approachRate < 5) {
-			note->noteDuration = 1200 + 600 * (5 - approachRate) / 5;
+			note->noteDuration = 800 + 400 * (5 - approachRate) / 5;
 		}
 		else if (approachRate == 5) {
-			note->noteDuration = 1200;
+			note->noteDuration = 800;
 		}
 		else {
-			note->noteDuration = 1200 - 750 * (approachRate - 5) / 5;
+			note->noteDuration = 800 - 500 * (approachRate - 5) / 5;
 		}
 	}
 
