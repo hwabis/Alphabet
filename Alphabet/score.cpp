@@ -29,15 +29,14 @@ int Score::getCount(int type) {
 	case 0:
 		return missCount;
 	case -1:
-		printf("Score::getCount invalid type");
+		printf("Score::getCount invalid type\n");
 		return -1;
 	}
 }
 
 float Score::getAccuracy() {
 	return (0.5f*(float)okCount + (float)perfCount) / 
-		((float)missCount + (float)okCount + (float)perfCount)
-		* 100 ;
+		((float)missCount + (float)okCount + (float)perfCount) * 100 ;
 }
 
 void Score::reset() {

@@ -159,6 +159,7 @@ int main(int argc, char* args[])
 
 			timer->resetStartTime();
 			timer->resetTickTime(); 
+			score->reset();
 			bool quit = false;
 			//While application is running
 			while (!quit)
@@ -201,9 +202,8 @@ int main(int argc, char* args[])
 
 				if (playingSong && !music->isPlaying()) {
 					music->free();
-					printf("RESULTS\n----------\nAccuracy: %.2f%%\nPerfect: %i\nOK: %i\nMiss: %i\n", 
+					printf("\nRESULTS\n----------\nAccuracy: %.2f%%\nPerfect: %i\nOK: %i\nMiss: %i\n", 
 						score->getAccuracy(), score->getCount(2), score->getCount(1), score->getCount(0));
-					score->reset();
 					break;
 				}
 			}
