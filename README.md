@@ -18,6 +18,8 @@ Then enter the map path; make sure to get the full name. For example, given an o
 C:\Users\<Username>\AppData\Local\osu!\Songs\1184727 ARForest - Altros\ARForest - Altros (Eyenine) [Futsuu].osu
 ```
 
+A quick way to get the path is to open the beatmap in the osu! editor, and then go to File > Open Song Folder.
+
 ## Notes
 
 This game is difficult compared to the traditional osu! gamemodes. Even if you are experienced in rhythm games, I'd suggest starting at a Futsuu difficulty or below. Scoring an S rank on a Muzukashii difficulty would be very impressive. :)
