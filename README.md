@@ -2,6 +2,12 @@
 
 Alphabet is a rhythm game written in SDL. It can load any Taiko beatmap from the rhythm game [osu!](https://osu.ppy.sh/home). 
 
+## Running
+
+When running Alphabet.exe, if you get an error about MSVCP140.dll or VCRUNTIME140.dll, make sure you have both the x86 and x64 versions of [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0) installed.
+
+If Windows Defender SmartScreen appears, click "More info" and "Run anyway". Unfortunately, this never looks good, and I don't know how to fix this...
+
 ## Loading a map
 
 First, make sure your map can be opened and played in osu!. (In other words, make sure the mapset .osz file is extracted.)
@@ -11,8 +17,6 @@ Then enter the map path; make sure to get the full name. For example, given an o
 ```
 C:\Users\<Username>\AppData\Local\osu!\Songs\1047505 cosMo@bousouP - Oceanus\cosMo@bousouP - Oceanus (Faputa) [Futsuu].osu
 ```
-
-Also make sure you don't move the audio and image files out of the mapset folder, or the map could load incorrectly.
 
 ## Notes
 
