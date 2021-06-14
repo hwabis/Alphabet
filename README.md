@@ -2,7 +2,7 @@
 
 Alphabet is a rhythm game written in SDL. It can load any Taiko beatmap from the rhythm game [osu!](https://osu.ppy.sh/home). 
 
-https://user-images.githubusercontent.com/62194990/121930565-85080c00-cd10-11eb-825d-a10befbde4c4.mov
+<img src="https://user-images.githubusercontent.com/62194990/121931903-3491ae00-cd12-11eb-968a-cbe5794fb368.gif" width="768">
 
 <sup>[ARForest - Altros [Futsuu] by Eyenine](https://osu.ppy.sh/beatmapsets/1184727#taiko/2469843)</sup>
 
