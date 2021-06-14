@@ -6,7 +6,7 @@ Alphabet is a rhythm game written in SDL. It can load any Taiko beatmap from the
 
 When running Alphabet.exe, if you get an error about MSVCP140.dll or VCRUNTIME140.dll, make sure you have both the x86 and x64 versions of [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0) installed.
 
-If Windows Defender SmartScreen appears, click "More info" and "Run anyway". Unfortunately, this never looks good, and I don't know how to fix this...
+If Windows Defender SmartScreen appears, click "More info" and "Run anyway". (I know this doesn't look good, and I don't know how to fix this...)
 
 ## Loading a map
 
