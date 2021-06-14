@@ -32,6 +32,9 @@
     <ClCompile Include="score.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="taikoConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">

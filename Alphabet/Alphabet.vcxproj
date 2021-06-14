@@ -26,6 +26,7 @@
     <ClCompile Include="music.cpp" />
     <ClCompile Include="note.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="taikoConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />

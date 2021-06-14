@@ -39,12 +39,15 @@ Music* music = new Music();
 Background* bg = new Background(); 
 Map* map = new Map(); 
 Timer* timer = new Timer();
+TaikoConverter* converter = new TaikoConverter();
 Score* score = new Score();
 
 //user inputs
 std::string mapPath;
-std::string bgPath;
 std::string musicPath;
+std::string bgPath;
+std::string musicFile;
+std::string bgFile;
 std::string ar;
 
 std::string input;
@@ -106,7 +109,6 @@ bool loadMedia()
 {
 	kb->loadKeyboard(gRenderer);
 
-	TaikoConverter* converter = new TaikoConverter(); 
 	std::vector<Note*> notes = converter->makeNotes(gRenderer, mapPath, kb);
 
 	music->loadMusic(musicPath);
@@ -150,14 +152,15 @@ int main(int argc, char* args[])
 			break;
 		}
 		else {
-			//TODO: make entering path easier.. let user specify song folder first
 			mapPath = input;
-			printf("Enter song path. \n>");
-			std::getline(std::cin, input);
-			musicPath = input;
-			printf("Enter background path. \n>");
-			std::getline(std::cin, input);
-			bgPath = input;
+			musicFile = converter->getSongPath(input);
+			bgFile = converter->getBackgroundPath(input);
+			//truncate path until hit backslash
+			while (!input.empty() && input[input.size() - 1] != '\\') {
+				input.pop_back();
+			}
+			musicPath = input + musicFile;
+			bgPath = input + bgFile;
 		}
 
 		printf("Enter the desired approach rate 1-10 (3 recommended for beginners), numerals only: \n>");
@@ -240,8 +243,8 @@ int main(int argc, char* args[])
 
 					if (playingSong && !music->isPlaying()) {
 						music->free();
-						printf("RESULTS\n----------\nAccuracy: %.2f%%\nPerfect: %i\nOK: %i\nMiss: %i\n\n",
-							score->getAccuracy(), score->getCount(2), score->getCount(1), score->getCount(0));
+						printf("RESULTS\n----------\nRANK: %s\nACCURACY: %.2f%%\nPERFECT: %i\nOK: %i\nMISS: %i\n\n",
+							score->getRank().c_str(), score->getAccuracy(), score->getCount(2), score->getCount(1), score->getCount(0));
 						break;
 					}
 				}

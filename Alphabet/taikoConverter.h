@@ -4,94 +4,17 @@
 #include <vector>
 #include <note.h>
 #include <fStream>
-#
+
 struct TaikoConverter
 {
 	//why not make a standard converter?
 	//I think taiko is more appropriate for this gamemode since
 	//taiko maps only focus on rhythm, whereas std maps often 
 	//dumb-down their rhythm in return for spacing patterns...
-	std::vector<Note*> makeNotes(SDL_Renderer* renderer, std::string path, Keyboard* kb) {
-		std::vector<Note*> notes = {};
+	std::vector<Note*> makeNotes(SDL_Renderer* renderer, std::string path, Keyboard* kb);
 
-		//check if valid taiko map
-		bool foundTaiko = false;
-		std::ifstream file(path);
+	float getOverallDifficulty(std::string path);
 
-		if (file.is_open()) {
-
-			bool findHitObjects = false;
-			std::string line;
-			//get the third number in each, or after the second comma
-			int commaCount;
-			std::string hitTime = "";
-			while (std::getline(file, line)) {
-				if (line == "Mode: 1") {
-					foundTaiko = true;
-				}
-				if (!findHitObjects) {
-					if (line == "[HitObjects]") {
-						findHitObjects = true;
-					}
-				}
-				else {
-					commaCount = 0;
-					hitTime = "";
-					for (int i = 0; i < line.length(); ++i) {
-						if (line[i] == ',') {
-							++commaCount;
-						}
-						else if (commaCount == 2) {
-							hitTime += line[i];
-						}
-						else if (commaCount == 3) {
-							break;
-						}
-					}
-					Note* note = new Note();
-					//is there a better way to determine notes...?
-					srand(std::stoi(hitTime));
-					if (hitTime != "") {
-						note->loadNote(renderer, std::stof(hitTime), kb->validKeys[rand() % kb->numberOfKeys], kb);
-					}
-					notes.push_back(note);
-				}
-			}
-			file.close();
-		}
-		
-		if (!foundTaiko) {
-			printf("Not a valid taiko map! Notes may not be generated correctly. Double-check the path.\n");
-		}
-
-		return notes;
-	}
-
-	float getOverallDifficulty(std::string path) {
-		std::string OD = "";
-
-		bool odFound = false;
-
-		std::ifstream file(path);
-		if (file.is_open()) {
-
-			std::string line;
-			while (std::getline(file, line)) {
-				if (line.substr(0,18) == "OverallDifficulty:") {
-					//line[18] to the end is the OD
-					for (int i = 18; i < line.length(); ++i) {
-						odFound = true;
-						OD += line[i];
-					}
-				}
-			}
-			file.close();
-		}
-		if (!odFound) {
-			return 0;
-		}
-		else {
-			return std::stof(OD);
-		}
-	}
+	std::string getSongPath(std::string path);
+	std::string getBackgroundPath(std::string path);
 };

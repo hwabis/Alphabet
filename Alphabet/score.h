@@ -1,5 +1,6 @@
 #pragma once
 #include <stdio.h>
+#include <string>
 class Score
 {
 	int missCount;
@@ -11,6 +12,7 @@ public:
 	void addCount(int countType);
 	int getCount(int countType);
 	float getAccuracy();
+	std::string getRank();
 	void reset();
 };
 
