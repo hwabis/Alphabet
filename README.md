@@ -2,6 +2,10 @@
 
 Alphabet is a rhythm game written in SDL. It can load any Taiko beatmap from the rhythm game [osu!](https://osu.ppy.sh/home). 
 
+https://user-images.githubusercontent.com/62194990/121930565-85080c00-cd10-11eb-825d-a10befbde4c4.mov
+
+<sup>[ARForest - Altros [Futsuu] by Eyenine](https://osu.ppy.sh/beatmapsets/1184727#taiko/2469843)</sup>
+
 ## Running
 
 When running Alphabet.exe, if you get an error about MSVCP140.dll or VCRUNTIME140.dll, make sure you have both the x86 and x64 versions of [Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0) installed.
