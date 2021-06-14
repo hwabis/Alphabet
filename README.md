@@ -15,7 +15,7 @@ First, make sure your map can be opened and played in osu!. (In other words, mak
 Then enter the map path; make sure to get the full name. For example, given an osu! installation in the default path, you could enter:
 
 ```
-C:\Users\<Username>\AppData\Local\osu!\Songs\1047505 cosMo@bousouP - Oceanus\cosMo@bousouP - Oceanus (Faputa) [Futsuu].osu
+C:\Users\<Username>\AppData\Local\osu!\Songs\1184727 ARForest - Altros\ARForest - Altros (Eyenine) [Futsuu].osu
 ```
 
 ## Notes
