@@ -1,8 +1,6 @@
 # Alphabet
 
-Alphabet is a rhythm game written in SDL. It can load any Taiko beatmap from the rhythm game [osu!](https://osu.ppy.sh/home). 
-
-If you don't have osu!, you can still try an example beatmap included in the release; just enter "ex" after you run the game.
+Alphabet is a rhythm game written in SDL. It can load any Taiko beatmap from the rhythm game [osu!](https://osu.ppy.sh/home). (If you don't have osu!, you can still try an example beatmap included in the release; just enter "ex" after you run the game.)
 
 <img src="https://user-images.githubusercontent.com/62194990/121931903-3491ae00-cd12-11eb-968a-cbe5794fb368.gif" width="768">
 
