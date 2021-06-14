@@ -76,7 +76,6 @@ float TaikoConverter::getOverallDifficulty(std::string path) {
 		file.close();
 	}
 	if (!odFound) {
-		printf("Map overall difficulty not found!\n");
 		return 0;
 	}
 	else {

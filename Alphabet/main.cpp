@@ -163,7 +163,7 @@ int main(int argc, char* args[])
 			bgPath = input + bgFile;
 		}
 
-		printf("Enter the desired approach rate 1-10 (3 recommended for beginners), numerals only: \n>");
+		printf("\nEnter the desired approach rate 1-10 (3 recommended for beginners), numerals only: \n>");
 		//TODO: catch if user doesn't input a number
 		std::getline(std::cin, ar);
 
@@ -181,7 +181,7 @@ int main(int argc, char* args[])
 			}
 			else
 			{
-				printf("Playing... (close the game window to cancel the current session)\n\n");
+				printf("\nPlaying... (close the game window to cancel the current session)\n\n");
 				SDL_RaiseWindow(gWindow);
 
 				//Event handler
