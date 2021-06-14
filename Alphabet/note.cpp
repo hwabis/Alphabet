@@ -18,25 +18,25 @@ bool Note::loadNote(SDL_Renderer* renderer, float hitTime, int key, Keyboard* kb
 	noteTexture = Texture::loadTexture(NOTE_PATH, renderer);
 	if (noteTexture == NULL)
 	{
-		printf("Failed to load note image!\n");
+		//printf("Failed to load note image!\n");
 		success = false;
 	}
 	perfTexture = Texture::loadTexture(PERFECT_PATH, renderer);
 	if (perfTexture == NULL)
 	{
-		printf("Failed to load perfTexture!\n");
+		//printf("Failed to load perfTexture!\n");
 		success = false;
 	}
 	okTexture = Texture::loadTexture(OK_PATH, renderer);
 	if (okTexture == NULL)
 	{
-		printf("Failed to load okTexture!\n");
+		//printf("Failed to load okTexture!\n");
 		success = false;
 	}
 	missTexture = Texture::loadTexture(MISS_PATH, renderer);
 	if (missTexture == NULL)
 	{
-		printf("Failed to load missTexture!\n");
+		//printf("Failed to load missTexture!\n");
 		success = false;
 	} //lol i keep copy pasting this...
 
